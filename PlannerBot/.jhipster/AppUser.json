@@ -1,0 +1,47 @@
+{
+  "annotations": {
+    "changelogDate": "20240713102536"
+  },
+  "applications": "*",
+  "dto": "mapstruct",
+  "fields": [
+    {
+      "fieldName": "name",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "age",
+      "fieldType": "Integer"
+    },
+    {
+      "fieldName": "appUserId",
+      "fieldType": "Long"
+    },
+    {
+      "fieldName": "chronotype",
+      "fieldType": "Chronotype",
+      "fieldValues": "MORNING,AFTERNOON"
+    },
+    {
+      "fieldName": "readingType",
+      "fieldType": "ReadingType",
+      "fieldValues": "MORNING,AFTERNOON,EVENING"
+    },
+    {
+      "fieldName": "attentionSpan",
+      "fieldType": "AttentionSpan",
+      "fieldValues": "SHORT,MEDIUM,LONG"
+    },
+    {
+      "fieldName": "gender",
+      "fieldType": "Gender",
+      "fieldValues": "MALE,FEMALE"
+    }
+  ],
+  "jpaMetamodelFiltering": true,
+  "name": "AppUser",
+  "pagination": "pagination",
+  "relationships": [],
+  "searchEngine": "no",
+  "service": "serviceImpl"
+}

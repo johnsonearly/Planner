@@ -1,0 +1,63 @@
+entity AppUser{
+        name String
+        age Integer
+        appUserId Long
+        chronotype Chronotype
+        readingType ReadingType
+        attentionSpan AttentionSpan
+        gender Gender
+
+
+}
+
+
+entity Timetable{
+    appUserId Long
+    dayOfWeek Day
+    startTime ZonedDateTime
+    endTime ZonedDateTime
+    activity String
+}
+
+enum Day{
+    MONDAY
+    TUESDAY
+    WEDNESDAY
+    THURSDAY
+    FRIDAY
+    SATURDAY
+    SUNDAY
+}
+enum  Chronotype{
+    MORNING
+    AFTERNOON
+}
+enum ReadingType{
+    MORNING
+    AFTERNOON
+    EVENING
+}
+enum AttentionSpan{
+    SHORT
+    MEDIUM
+    LONG
+}
+enum Gender{
+    MALE
+    FEMALE
+}
+// Set pagination options
+paginate * with pagination
+
+// Use Data Transfer Objects (DTO)
+dto * with mapstruct
+
+// Set service options to all except few
+service all with serviceImpl
+
+// Set an angular suffix
+// angularSuffix * with mySuffix
+
+filter *
+
+
