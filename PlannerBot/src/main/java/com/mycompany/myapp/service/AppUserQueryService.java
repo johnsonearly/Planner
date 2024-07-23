@@ -97,6 +97,9 @@ public class AppUserQueryService extends QueryService<AppUser> {
             if (criteria.getGender() != null) {
                 specification = specification.and(buildSpecification(criteria.getGender(), AppUser_.gender));
             }
+            if (criteria.getReadingStrategy() != null) {
+                specification = specification.and(buildSpecification(criteria.getReadingStrategy(), AppUser_.readingStrategy));
+            }
         }
         return specification;
     }

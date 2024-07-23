@@ -1,7 +1,8 @@
 package com.mycompany.myapp.service.dto;
 
-import com.mycompany.myapp.domain.enumeration.Day;
+import com.mycompany.myapp.domain.enumeration.Importance;
 import java.io.Serializable;
+import java.time.LocalDate;
 import java.time.ZonedDateTime;
 import java.util.Objects;
 
@@ -15,13 +16,19 @@ public class TimetableDTO implements Serializable {
 
     private Long appUserId;
 
-    private Day dayOfWeek;
+    private String dayOfWeek;
+
+    private LocalDate dateOfActivity;
 
     private ZonedDateTime startTime;
 
     private ZonedDateTime endTime;
 
     private String activity;
+
+    private Boolean isDone;
+
+    private Importance levelOfImportance;
 
     public Long getId() {
         return id;
@@ -39,12 +46,20 @@ public class TimetableDTO implements Serializable {
         this.appUserId = appUserId;
     }
 
-    public Day getDayOfWeek() {
+    public String getDayOfWeek() {
         return dayOfWeek;
     }
 
-    public void setDayOfWeek(Day dayOfWeek) {
+    public void setDayOfWeek(String dayOfWeek) {
         this.dayOfWeek = dayOfWeek;
+    }
+
+    public LocalDate getDateOfActivity() {
+        return dateOfActivity;
+    }
+
+    public void setDateOfActivity(LocalDate dateOfActivity) {
+        this.dateOfActivity = dateOfActivity;
     }
 
     public ZonedDateTime getStartTime() {
@@ -69,6 +84,22 @@ public class TimetableDTO implements Serializable {
 
     public void setActivity(String activity) {
         this.activity = activity;
+    }
+
+    public Boolean getIsDone() {
+        return isDone;
+    }
+
+    public void setIsDone(Boolean isDone) {
+        this.isDone = isDone;
+    }
+
+    public Importance getLevelOfImportance() {
+        return levelOfImportance;
+    }
+
+    public void setLevelOfImportance(Importance levelOfImportance) {
+        this.levelOfImportance = levelOfImportance;
     }
 
     @Override
@@ -99,9 +130,12 @@ public class TimetableDTO implements Serializable {
             "id=" + getId() +
             ", appUserId=" + getAppUserId() +
             ", dayOfWeek='" + getDayOfWeek() + "'" +
+            ", dateOfActivity='" + getDateOfActivity() + "'" +
             ", startTime='" + getStartTime() + "'" +
             ", endTime='" + getEndTime() + "'" +
             ", activity='" + getActivity() + "'" +
+            ", isDone='" + getIsDone() + "'" +
+            ", levelOfImportance='" + getLevelOfImportance() + "'" +
             "}";
     }
 }

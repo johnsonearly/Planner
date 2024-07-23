@@ -1,5 +1,5 @@
 export enum Chronotype {
   MORNING = 'MORNING',
 
-  AFTERNOON = 'AFTERNOON',
+  NIGHT = 'NIGHT',
 }

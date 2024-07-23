@@ -13,6 +13,7 @@ import { Chronotype } from 'app/shared/model/enumerations/chronotype.model';
 import { ReadingType } from 'app/shared/model/enumerations/reading-type.model';
 import { AttentionSpan } from 'app/shared/model/enumerations/attention-span.model';
 import { Gender } from 'app/shared/model/enumerations/gender.model';
+import { ReadingStrategy } from 'app/shared/model/enumerations/reading-strategy.model';
 import { getEntity, updateEntity, createEntity, reset } from './app-user.reducer';
 
 export const AppUserUpdate = () => {
@@ -31,6 +32,7 @@ export const AppUserUpdate = () => {
   const readingTypeValues = Object.keys(ReadingType);
   const attentionSpanValues = Object.keys(AttentionSpan);
   const genderValues = Object.keys(Gender);
+  const readingStrategyValues = Object.keys(ReadingStrategy);
 
   const handleClose = () => {
     navigate('/app-user' + location.search);
@@ -79,9 +81,10 @@ export const AppUserUpdate = () => {
       ? {}
       : {
           chronotype: 'MORNING',
-          readingType: 'MORNING',
+          readingType: 'INTENSIVE',
           attentionSpan: 'SHORT',
           gender: 'MALE',
+          readingStrategy: 'SPACED_REPETITION',
           ...appUserEntity,
         };
 
@@ -129,6 +132,19 @@ export const AppUserUpdate = () => {
                 {genderValues.map(gender => (
                   <option value={gender} key={gender}>
                     {gender}
+                  </option>
+                ))}
+              </ValidatedField>
+              <ValidatedField
+                label="Reading Strategy"
+                id="app-user-readingStrategy"
+                name="readingStrategy"
+                data-cy="readingStrategy"
+                type="select"
+              >
+                {readingStrategyValues.map(readingStrategy => (
+                  <option value={readingStrategy} key={readingStrategy}>
+                    {readingStrategy}
                   </option>
                 ))}
               </ValidatedField>

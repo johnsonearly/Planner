@@ -20,6 +20,9 @@
             <column name="day_of_week" type="varchar(255)">
                 <constraints nullable="true" />
             </column>
+            <column name="date_of_activity" type="date">
+                <constraints nullable="true" />
+            </column>
             <column name="start_time" type="${datetimeType}">
                 <constraints nullable="true" />
             </column>
@@ -27,6 +30,12 @@
                 <constraints nullable="true" />
             </column>
             <column name="activity" type="varchar(255)">
+                <constraints nullable="true" />
+            </column>
+            <column name="is_done" type="boolean">
+                <constraints nullable="true" />
+            </column>
+            <column name="level_of_importance" type="varchar(255)">
                 <constraints nullable="true" />
             </column>
             <!-- jhipster-needle-liquibase-add-column - JHipster will add columns here -->
@@ -54,9 +63,12 @@
             <column name="id" type="numeric"/>
             <column name="app_user_id" type="numeric"/>
             <column name="day_of_week" type="string"/>
+            <column name="date_of_activity" type="date"/>
             <column name="start_time" type="date"/>
             <column name="end_time" type="date"/>
             <column name="activity" type="string"/>
+            <column name="is_done" type="boolean"/>
+            <column name="level_of_importance" type="string"/>
             <!-- jhipster-needle-liquibase-add-loadcolumn - JHipster (and/or extensions) can add load columns here -->
         </loadData>
     </changeSet>

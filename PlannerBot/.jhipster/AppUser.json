@@ -20,12 +20,12 @@
     {
       "fieldName": "chronotype",
       "fieldType": "Chronotype",
-      "fieldValues": "MORNING,AFTERNOON"
+      "fieldValues": "MORNING,NIGHT"
     },
     {
       "fieldName": "readingType",
       "fieldType": "ReadingType",
-      "fieldValues": "MORNING,AFTERNOON,EVENING"
+      "fieldValues": "INTENSIVE,EXTENSIVE"
     },
     {
       "fieldName": "attentionSpan",
@@ -36,6 +36,11 @@
       "fieldName": "gender",
       "fieldType": "Gender",
       "fieldValues": "MALE,FEMALE"
+    },
+    {
+      "fieldName": "readingStrategy",
+      "fieldType": "ReadingStrategy",
+      "fieldValues": "SPACED_REPETITION,ACTIVE_RECALL,SQ3R_METHOD,POMODORO_TECHNIQUE"
     }
   ],
   "jpaMetamodelFiltering": true,

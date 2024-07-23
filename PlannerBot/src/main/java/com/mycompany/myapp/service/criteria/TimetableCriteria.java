@@ -1,6 +1,6 @@
 package com.mycompany.myapp.service.criteria;
 
-import com.mycompany.myapp.domain.enumeration.Day;
+import com.mycompany.myapp.domain.enumeration.Importance;
 import java.io.Serializable;
 import java.util.Objects;
 import java.util.Optional;
@@ -22,19 +22,19 @@ import tech.jhipster.service.filter.*;
 public class TimetableCriteria implements Serializable, Criteria {
 
     /**
-     * Class for filtering Day
+     * Class for filtering Importance
      */
-    public static class DayFilter extends Filter<Day> {
+    public static class ImportanceFilter extends Filter<Importance> {
 
-        public DayFilter() {}
+        public ImportanceFilter() {}
 
-        public DayFilter(DayFilter filter) {
+        public ImportanceFilter(ImportanceFilter filter) {
             super(filter);
         }
 
         @Override
-        public DayFilter copy() {
-            return new DayFilter(this);
+        public ImportanceFilter copy() {
+            return new ImportanceFilter(this);
         }
     }
 
@@ -44,13 +44,19 @@ public class TimetableCriteria implements Serializable, Criteria {
 
     private LongFilter appUserId;
 
-    private DayFilter dayOfWeek;
+    private StringFilter dayOfWeek;
+
+    private LocalDateFilter dateOfActivity;
 
     private ZonedDateTimeFilter startTime;
 
     private ZonedDateTimeFilter endTime;
 
     private StringFilter activity;
+
+    private BooleanFilter isDone;
+
+    private ImportanceFilter levelOfImportance;
 
     private Boolean distinct;
 
@@ -59,10 +65,13 @@ public class TimetableCriteria implements Serializable, Criteria {
     public TimetableCriteria(TimetableCriteria other) {
         this.id = other.optionalId().map(LongFilter::copy).orElse(null);
         this.appUserId = other.optionalAppUserId().map(LongFilter::copy).orElse(null);
-        this.dayOfWeek = other.optionalDayOfWeek().map(DayFilter::copy).orElse(null);
+        this.dayOfWeek = other.optionalDayOfWeek().map(StringFilter::copy).orElse(null);
+        this.dateOfActivity = other.optionalDateOfActivity().map(LocalDateFilter::copy).orElse(null);
         this.startTime = other.optionalStartTime().map(ZonedDateTimeFilter::copy).orElse(null);
         this.endTime = other.optionalEndTime().map(ZonedDateTimeFilter::copy).orElse(null);
         this.activity = other.optionalActivity().map(StringFilter::copy).orElse(null);
+        this.isDone = other.optionalIsDone().map(BooleanFilter::copy).orElse(null);
+        this.levelOfImportance = other.optionalLevelOfImportance().map(ImportanceFilter::copy).orElse(null);
         this.distinct = other.distinct;
     }
 
@@ -109,23 +118,42 @@ public class TimetableCriteria implements Serializable, Criteria {
         this.appUserId = appUserId;
     }
 
-    public DayFilter getDayOfWeek() {
+    public StringFilter getDayOfWeek() {
         return dayOfWeek;
     }
 
-    public Optional<DayFilter> optionalDayOfWeek() {
+    public Optional<StringFilter> optionalDayOfWeek() {
         return Optional.ofNullable(dayOfWeek);
     }
 
-    public DayFilter dayOfWeek() {
+    public StringFilter dayOfWeek() {
         if (dayOfWeek == null) {
-            setDayOfWeek(new DayFilter());
+            setDayOfWeek(new StringFilter());
         }
         return dayOfWeek;
     }
 
-    public void setDayOfWeek(DayFilter dayOfWeek) {
+    public void setDayOfWeek(StringFilter dayOfWeek) {
         this.dayOfWeek = dayOfWeek;
+    }
+
+    public LocalDateFilter getDateOfActivity() {
+        return dateOfActivity;
+    }
+
+    public Optional<LocalDateFilter> optionalDateOfActivity() {
+        return Optional.ofNullable(dateOfActivity);
+    }
+
+    public LocalDateFilter dateOfActivity() {
+        if (dateOfActivity == null) {
+            setDateOfActivity(new LocalDateFilter());
+        }
+        return dateOfActivity;
+    }
+
+    public void setDateOfActivity(LocalDateFilter dateOfActivity) {
+        this.dateOfActivity = dateOfActivity;
     }
 
     public ZonedDateTimeFilter getStartTime() {
@@ -185,6 +213,44 @@ public class TimetableCriteria implements Serializable, Criteria {
         this.activity = activity;
     }
 
+    public BooleanFilter getIsDone() {
+        return isDone;
+    }
+
+    public Optional<BooleanFilter> optionalIsDone() {
+        return Optional.ofNullable(isDone);
+    }
+
+    public BooleanFilter isDone() {
+        if (isDone == null) {
+            setIsDone(new BooleanFilter());
+        }
+        return isDone;
+    }
+
+    public void setIsDone(BooleanFilter isDone) {
+        this.isDone = isDone;
+    }
+
+    public ImportanceFilter getLevelOfImportance() {
+        return levelOfImportance;
+    }
+
+    public Optional<ImportanceFilter> optionalLevelOfImportance() {
+        return Optional.ofNullable(levelOfImportance);
+    }
+
+    public ImportanceFilter levelOfImportance() {
+        if (levelOfImportance == null) {
+            setLevelOfImportance(new ImportanceFilter());
+        }
+        return levelOfImportance;
+    }
+
+    public void setLevelOfImportance(ImportanceFilter levelOfImportance) {
+        this.levelOfImportance = levelOfImportance;
+    }
+
     public Boolean getDistinct() {
         return distinct;
     }
@@ -217,16 +283,19 @@ public class TimetableCriteria implements Serializable, Criteria {
             Objects.equals(id, that.id) &&
             Objects.equals(appUserId, that.appUserId) &&
             Objects.equals(dayOfWeek, that.dayOfWeek) &&
+            Objects.equals(dateOfActivity, that.dateOfActivity) &&
             Objects.equals(startTime, that.startTime) &&
             Objects.equals(endTime, that.endTime) &&
             Objects.equals(activity, that.activity) &&
+            Objects.equals(isDone, that.isDone) &&
+            Objects.equals(levelOfImportance, that.levelOfImportance) &&
             Objects.equals(distinct, that.distinct)
         );
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, appUserId, dayOfWeek, startTime, endTime, activity, distinct);
+        return Objects.hash(id, appUserId, dayOfWeek, dateOfActivity, startTime, endTime, activity, isDone, levelOfImportance, distinct);
     }
 
     // prettier-ignore
@@ -236,9 +305,12 @@ public class TimetableCriteria implements Serializable, Criteria {
             optionalId().map(f -> "id=" + f + ", ").orElse("") +
             optionalAppUserId().map(f -> "appUserId=" + f + ", ").orElse("") +
             optionalDayOfWeek().map(f -> "dayOfWeek=" + f + ", ").orElse("") +
+            optionalDateOfActivity().map(f -> "dateOfActivity=" + f + ", ").orElse("") +
             optionalStartTime().map(f -> "startTime=" + f + ", ").orElse("") +
             optionalEndTime().map(f -> "endTime=" + f + ", ").orElse("") +
             optionalActivity().map(f -> "activity=" + f + ", ").orElse("") +
+            optionalIsDone().map(f -> "isDone=" + f + ", ").orElse("") +
+            optionalLevelOfImportance().map(f -> "levelOfImportance=" + f + ", ").orElse("") +
             optionalDistinct().map(f -> "distinct=" + f + ", ").orElse("") +
         "}";
     }

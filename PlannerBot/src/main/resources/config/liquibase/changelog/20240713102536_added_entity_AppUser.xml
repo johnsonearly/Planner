@@ -35,6 +35,9 @@
             <column name="gender" type="varchar(255)">
                 <constraints nullable="true" />
             </column>
+            <column name="reading_strategy" type="varchar(255)">
+                <constraints nullable="true" />
+            </column>
             <!-- jhipster-needle-liquibase-add-column - JHipster will add columns here -->
         </createTable>
     </changeSet>
@@ -63,6 +66,7 @@
             <column name="reading_type" type="string"/>
             <column name="attention_span" type="string"/>
             <column name="gender" type="string"/>
+            <column name="reading_strategy" type="string"/>
             <!-- jhipster-needle-liquibase-add-loadcolumn - JHipster (and/or extensions) can add load columns here -->
         </loadData>
     </changeSet>

@@ -1,13 +1,18 @@
 import dayjs from 'dayjs';
-import { Day } from 'app/shared/model/enumerations/day.model';
+import { Importance } from 'app/shared/model/enumerations/importance.model';
 
 export interface ITimetable {
   id?: number;
   appUserId?: number | null;
-  dayOfWeek?: keyof typeof Day | null;
+  dayOfWeek?: string | null;
+  dateOfActivity?: dayjs.Dayjs | null;
   startTime?: dayjs.Dayjs | null;
   endTime?: dayjs.Dayjs | null;
   activity?: string | null;
+  isDone?: boolean | null;
+  levelOfImportance?: keyof typeof Importance | null;
 }
 
-export const defaultValue: Readonly<ITimetable> = {};
+export const defaultValue: Readonly<ITimetable> = {
+  isDone: false,
+};

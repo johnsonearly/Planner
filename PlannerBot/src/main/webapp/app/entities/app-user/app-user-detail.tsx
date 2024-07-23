@@ -55,6 +55,10 @@ export const AppUserDetail = () => {
             <span id="gender">Gender</span>
           </dt>
           <dd>{appUserEntity.gender}</dd>
+          <dt>
+            <span id="readingStrategy">Reading Strategy</span>
+          </dt>
+          <dd>{appUserEntity.readingStrategy}</dd>
         </dl>
         <Button tag={Link} to="/app-user" replace color="info" data-cy="entityDetailsBackButton">
           <FontAwesomeIcon icon="arrow-left" /> <span className="d-none d-md-inline">Back</span>

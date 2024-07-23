@@ -11,8 +11,11 @@
     },
     {
       "fieldName": "dayOfWeek",
-      "fieldType": "Day",
-      "fieldValues": "MONDAY,TUESDAY,WEDNESDAY,THURSDAY,FRIDAY,SATURDAY,SUNDAY"
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "dateOfActivity",
+      "fieldType": "LocalDate"
     },
     {
       "fieldName": "startTime",
@@ -25,6 +28,15 @@
     {
       "fieldName": "activity",
       "fieldType": "String"
+    },
+    {
+      "fieldName": "isDone",
+      "fieldType": "Boolean"
+    },
+    {
+      "fieldName": "levelOfImportance",
+      "fieldType": "Importance",
+      "fieldValues": "LOW,MEDIUM,HIGH"
     }
   ],
   "jpaMetamodelFiltering": true,

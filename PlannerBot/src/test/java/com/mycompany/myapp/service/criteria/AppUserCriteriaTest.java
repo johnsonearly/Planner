@@ -82,6 +82,7 @@ class AppUserCriteriaTest {
         appUserCriteria.readingType();
         appUserCriteria.attentionSpan();
         appUserCriteria.gender();
+        appUserCriteria.readingStrategy();
         appUserCriteria.distinct();
     }
 
@@ -96,6 +97,7 @@ class AppUserCriteriaTest {
                 condition.apply(criteria.getReadingType()) &&
                 condition.apply(criteria.getAttentionSpan()) &&
                 condition.apply(criteria.getGender()) &&
+                condition.apply(criteria.getReadingStrategy()) &&
                 condition.apply(criteria.getDistinct()),
             "every filter matches"
         );
@@ -112,6 +114,7 @@ class AppUserCriteriaTest {
                 condition.apply(criteria.getReadingType(), copy.getReadingType()) &&
                 condition.apply(criteria.getAttentionSpan(), copy.getAttentionSpan()) &&
                 condition.apply(criteria.getGender(), copy.getGender()) &&
+                condition.apply(criteria.getReadingStrategy(), copy.getReadingStrategy()) &&
                 condition.apply(criteria.getDistinct(), copy.getDistinct()),
             "every filter matches"
         );

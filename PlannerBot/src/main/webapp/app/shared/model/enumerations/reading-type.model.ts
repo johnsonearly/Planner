@@ -1,7 +1,5 @@
 export enum ReadingType {
-  MORNING = 'MORNING',
+  INTENSIVE = 'INTENSIVE',
 
-  AFTERNOON = 'AFTERNOON',
-
-  EVENING = 'EVENING',
+  EXTENSIVE = 'EXTENSIVE',
 }

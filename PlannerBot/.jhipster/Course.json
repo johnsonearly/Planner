@@ -1,0 +1,28 @@
+{
+  "annotations": {
+    "changelogDate": "20240716203818"
+  },
+  "applications": "*",
+  "dto": "mapstruct",
+  "fields": [
+    {
+      "fieldName": "appUserId",
+      "fieldType": "Long"
+    },
+    {
+      "fieldName": "courseName",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "difficulty",
+      "fieldType": "Difficulty",
+      "fieldValues": "LOW,MEDIUM,HIGH"
+    }
+  ],
+  "jpaMetamodelFiltering": true,
+  "name": "Course",
+  "pagination": "pagination",
+  "relationships": [],
+  "searchEngine": "no",
+  "service": "serviceImpl"
+}

@@ -5,6 +5,8 @@ import ErrorBoundaryRoutes from 'app/shared/error/error-boundary-routes';
 
 import AppUser from './app-user';
 import Timetable from './timetable';
+import Course from './course';
+import FreeTime from './free-time';
 /* jhipster-needle-add-route-import - JHipster will add routes here */
 
 export default () => {
@@ -14,6 +16,8 @@ export default () => {
         {/* prettier-ignore */}
         <Route path="app-user/*" element={<AppUser />} />
         <Route path="timetable/*" element={<Timetable />} />
+        <Route path="course/*" element={<Course />} />
+        <Route path="free-time/*" element={<FreeTime />} />
         {/* jhipster-needle-add-route-path - JHipster will add routes here */}
       </ErrorBoundaryRoutes>
     </div>

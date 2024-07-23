@@ -50,6 +50,7 @@ public class TimetableAsserts {
             .as("Verify Timetable relevant properties")
             .satisfies(e -> assertThat(e.getAppUserId()).as("check appUserId").isEqualTo(actual.getAppUserId()))
             .satisfies(e -> assertThat(e.getDayOfWeek()).as("check dayOfWeek").isEqualTo(actual.getDayOfWeek()))
+            .satisfies(e -> assertThat(e.getDateOfActivity()).as("check dateOfActivity").isEqualTo(actual.getDateOfActivity()))
             .satisfies(
                 e ->
                     assertThat(e.getStartTime())
@@ -60,7 +61,9 @@ public class TimetableAsserts {
             .satisfies(
                 e -> assertThat(e.getEndTime()).as("check endTime").usingComparator(zonedDataTimeSameInstant).isEqualTo(actual.getEndTime())
             )
-            .satisfies(e -> assertThat(e.getActivity()).as("check activity").isEqualTo(actual.getActivity()));
+            .satisfies(e -> assertThat(e.getActivity()).as("check activity").isEqualTo(actual.getActivity()))
+            .satisfies(e -> assertThat(e.getIsDone()).as("check isDone").isEqualTo(actual.getIsDone()))
+            .satisfies(e -> assertThat(e.getLevelOfImportance()).as("check levelOfImportance").isEqualTo(actual.getLevelOfImportance()));
     }
 
     /**

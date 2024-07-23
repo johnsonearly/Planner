@@ -132,6 +132,9 @@ export const AppUser = () => {
                 <th className="hand" onClick={sort('gender')}>
                   Gender <FontAwesomeIcon icon={getSortIconByFieldName('gender')} />
                 </th>
+                <th className="hand" onClick={sort('readingStrategy')}>
+                  Reading Strategy <FontAwesomeIcon icon={getSortIconByFieldName('readingStrategy')} />
+                </th>
                 <th />
               </tr>
             </thead>
@@ -150,6 +153,7 @@ export const AppUser = () => {
                   <td>{appUser.readingType}</td>
                   <td>{appUser.attentionSpan}</td>
                   <td>{appUser.gender}</td>
+                  <td>{appUser.readingStrategy}</td>
                   <td className="text-end">
                     <div className="btn-group flex-btn-group-container">
                       <Button tag={Link} to={`/app-user/${appUser.id}`} color="info" size="sm" data-cy="entityDetailsButton">

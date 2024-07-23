@@ -3,6 +3,7 @@ package com.mycompany.myapp.service.dto;
 import com.mycompany.myapp.domain.enumeration.AttentionSpan;
 import com.mycompany.myapp.domain.enumeration.Chronotype;
 import com.mycompany.myapp.domain.enumeration.Gender;
+import com.mycompany.myapp.domain.enumeration.ReadingStrategy;
 import com.mycompany.myapp.domain.enumeration.ReadingType;
 import java.io.Serializable;
 import java.util.Objects;
@@ -28,6 +29,8 @@ public class AppUserDTO implements Serializable {
     private AttentionSpan attentionSpan;
 
     private Gender gender;
+
+    private ReadingStrategy readingStrategy;
 
     public Long getId() {
         return id;
@@ -93,6 +96,14 @@ public class AppUserDTO implements Serializable {
         this.gender = gender;
     }
 
+    public ReadingStrategy getReadingStrategy() {
+        return readingStrategy;
+    }
+
+    public void setReadingStrategy(ReadingStrategy readingStrategy) {
+        this.readingStrategy = readingStrategy;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) {
@@ -126,6 +137,7 @@ public class AppUserDTO implements Serializable {
             ", readingType='" + getReadingType() + "'" +
             ", attentionSpan='" + getAttentionSpan() + "'" +
             ", gender='" + getGender() + "'" +
+            ", readingStrategy='" + getReadingStrategy() + "'" +
             "}";
     }
 }

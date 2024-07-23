@@ -21,7 +21,7 @@ import tech.jhipster.config.JHipsterConstants;
 
 @SpringBootApplication
 @EnableConfigurationProperties({ LiquibaseProperties.class, ApplicationProperties.class })
-public class PlannerBotApp {
+public class    PlannerBotApp {
 
     private static final Logger log = LoggerFactory.getLogger(PlannerBotApp.class);
 

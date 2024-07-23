@@ -11,12 +11,13 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.mycompany.myapp.IntegrationTest;
 import com.mycompany.myapp.domain.Timetable;
-import com.mycompany.myapp.domain.enumeration.Day;
+import com.mycompany.myapp.domain.enumeration.Importance;
 import com.mycompany.myapp.repository.TimetableRepository;
 import com.mycompany.myapp.service.dto.TimetableDTO;
 import com.mycompany.myapp.service.mapper.TimetableMapper;
 import jakarta.persistence.EntityManager;
 import java.time.Instant;
+import java.time.LocalDate;
 import java.time.ZoneId;
 import java.time.ZoneOffset;
 import java.time.ZonedDateTime;
@@ -44,8 +45,12 @@ class TimetableResourceIT {
     private static final Long UPDATED_APP_USER_ID = 2L;
     private static final Long SMALLER_APP_USER_ID = 1L - 1L;
 
-    private static final Day DEFAULT_DAY_OF_WEEK = Day.MONDAY;
-    private static final Day UPDATED_DAY_OF_WEEK = Day.TUESDAY;
+    private static final String DEFAULT_DAY_OF_WEEK = "AAAAAAAAAA";
+    private static final String UPDATED_DAY_OF_WEEK = "BBBBBBBBBB";
+
+    private static final LocalDate DEFAULT_DATE_OF_ACTIVITY = LocalDate.ofEpochDay(0L);
+    private static final LocalDate UPDATED_DATE_OF_ACTIVITY = LocalDate.now(ZoneId.systemDefault());
+    private static final LocalDate SMALLER_DATE_OF_ACTIVITY = LocalDate.ofEpochDay(-1L);
 
     private static final ZonedDateTime DEFAULT_START_TIME = ZonedDateTime.ofInstant(Instant.ofEpochMilli(0L), ZoneOffset.UTC);
     private static final ZonedDateTime UPDATED_START_TIME = ZonedDateTime.now(ZoneId.systemDefault()).withNano(0);
@@ -57,6 +62,12 @@ class TimetableResourceIT {
 
     private static final String DEFAULT_ACTIVITY = "AAAAAAAAAA";
     private static final String UPDATED_ACTIVITY = "BBBBBBBBBB";
+
+    private static final Boolean DEFAULT_IS_DONE = false;
+    private static final Boolean UPDATED_IS_DONE = true;
+
+    private static final Importance DEFAULT_LEVEL_OF_IMPORTANCE = Importance.LOW;
+    private static final Importance UPDATED_LEVEL_OF_IMPORTANCE = Importance.MEDIUM;
 
     private static final String ENTITY_API_URL = "/api/timetables";
     private static final String ENTITY_API_URL_ID = ENTITY_API_URL + "/{id}";
@@ -93,9 +104,12 @@ class TimetableResourceIT {
         Timetable timetable = new Timetable()
             .appUserId(DEFAULT_APP_USER_ID)
             .dayOfWeek(DEFAULT_DAY_OF_WEEK)
+            .dateOfActivity(DEFAULT_DATE_OF_ACTIVITY)
             .startTime(DEFAULT_START_TIME)
             .endTime(DEFAULT_END_TIME)
-            .activity(DEFAULT_ACTIVITY);
+            .activity(DEFAULT_ACTIVITY)
+            .isDone(DEFAULT_IS_DONE)
+            .levelOfImportance(DEFAULT_LEVEL_OF_IMPORTANCE);
         return timetable;
     }
 
@@ -109,9 +123,12 @@ class TimetableResourceIT {
         Timetable timetable = new Timetable()
             .appUserId(UPDATED_APP_USER_ID)
             .dayOfWeek(UPDATED_DAY_OF_WEEK)
+            .dateOfActivity(UPDATED_DATE_OF_ACTIVITY)
             .startTime(UPDATED_START_TIME)
             .endTime(UPDATED_END_TIME)
-            .activity(UPDATED_ACTIVITY);
+            .activity(UPDATED_ACTIVITY)
+            .isDone(UPDATED_IS_DONE)
+            .levelOfImportance(UPDATED_LEVEL_OF_IMPORTANCE);
         return timetable;
     }
 
@@ -183,10 +200,13 @@ class TimetableResourceIT {
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
             .andExpect(jsonPath("$.[*].id").value(hasItem(timetable.getId().intValue())))
             .andExpect(jsonPath("$.[*].appUserId").value(hasItem(DEFAULT_APP_USER_ID.intValue())))
-            .andExpect(jsonPath("$.[*].dayOfWeek").value(hasItem(DEFAULT_DAY_OF_WEEK.toString())))
+            .andExpect(jsonPath("$.[*].dayOfWeek").value(hasItem(DEFAULT_DAY_OF_WEEK)))
+            .andExpect(jsonPath("$.[*].dateOfActivity").value(hasItem(DEFAULT_DATE_OF_ACTIVITY.toString())))
             .andExpect(jsonPath("$.[*].startTime").value(hasItem(sameInstant(DEFAULT_START_TIME))))
             .andExpect(jsonPath("$.[*].endTime").value(hasItem(sameInstant(DEFAULT_END_TIME))))
-            .andExpect(jsonPath("$.[*].activity").value(hasItem(DEFAULT_ACTIVITY)));
+            .andExpect(jsonPath("$.[*].activity").value(hasItem(DEFAULT_ACTIVITY)))
+            .andExpect(jsonPath("$.[*].isDone").value(hasItem(DEFAULT_IS_DONE.booleanValue())))
+            .andExpect(jsonPath("$.[*].levelOfImportance").value(hasItem(DEFAULT_LEVEL_OF_IMPORTANCE.toString())));
     }
 
     @Test
@@ -202,10 +222,13 @@ class TimetableResourceIT {
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
             .andExpect(jsonPath("$.id").value(timetable.getId().intValue()))
             .andExpect(jsonPath("$.appUserId").value(DEFAULT_APP_USER_ID.intValue()))
-            .andExpect(jsonPath("$.dayOfWeek").value(DEFAULT_DAY_OF_WEEK.toString()))
+            .andExpect(jsonPath("$.dayOfWeek").value(DEFAULT_DAY_OF_WEEK))
+            .andExpect(jsonPath("$.dateOfActivity").value(DEFAULT_DATE_OF_ACTIVITY.toString()))
             .andExpect(jsonPath("$.startTime").value(sameInstant(DEFAULT_START_TIME)))
             .andExpect(jsonPath("$.endTime").value(sameInstant(DEFAULT_END_TIME)))
-            .andExpect(jsonPath("$.activity").value(DEFAULT_ACTIVITY));
+            .andExpect(jsonPath("$.activity").value(DEFAULT_ACTIVITY))
+            .andExpect(jsonPath("$.isDone").value(DEFAULT_IS_DONE.booleanValue()))
+            .andExpect(jsonPath("$.levelOfImportance").value(DEFAULT_LEVEL_OF_IMPORTANCE.toString()));
     }
 
     @Test
@@ -324,6 +347,111 @@ class TimetableResourceIT {
 
         // Get all the timetableList where dayOfWeek is not null
         defaultTimetableFiltering("dayOfWeek.specified=true", "dayOfWeek.specified=false");
+    }
+
+    @Test
+    @Transactional
+    void getAllTimetablesByDayOfWeekContainsSomething() throws Exception {
+        // Initialize the database
+        insertedTimetable = timetableRepository.saveAndFlush(timetable);
+
+        // Get all the timetableList where dayOfWeek contains
+        defaultTimetableFiltering("dayOfWeek.contains=" + DEFAULT_DAY_OF_WEEK, "dayOfWeek.contains=" + UPDATED_DAY_OF_WEEK);
+    }
+
+    @Test
+    @Transactional
+    void getAllTimetablesByDayOfWeekNotContainsSomething() throws Exception {
+        // Initialize the database
+        insertedTimetable = timetableRepository.saveAndFlush(timetable);
+
+        // Get all the timetableList where dayOfWeek does not contain
+        defaultTimetableFiltering("dayOfWeek.doesNotContain=" + UPDATED_DAY_OF_WEEK, "dayOfWeek.doesNotContain=" + DEFAULT_DAY_OF_WEEK);
+    }
+
+    @Test
+    @Transactional
+    void getAllTimetablesByDateOfActivityIsEqualToSomething() throws Exception {
+        // Initialize the database
+        insertedTimetable = timetableRepository.saveAndFlush(timetable);
+
+        // Get all the timetableList where dateOfActivity equals to
+        defaultTimetableFiltering("dateOfActivity.equals=" + DEFAULT_DATE_OF_ACTIVITY, "dateOfActivity.equals=" + UPDATED_DATE_OF_ACTIVITY);
+    }
+
+    @Test
+    @Transactional
+    void getAllTimetablesByDateOfActivityIsInShouldWork() throws Exception {
+        // Initialize the database
+        insertedTimetable = timetableRepository.saveAndFlush(timetable);
+
+        // Get all the timetableList where dateOfActivity in
+        defaultTimetableFiltering(
+            "dateOfActivity.in=" + DEFAULT_DATE_OF_ACTIVITY + "," + UPDATED_DATE_OF_ACTIVITY,
+            "dateOfActivity.in=" + UPDATED_DATE_OF_ACTIVITY
+        );
+    }
+
+    @Test
+    @Transactional
+    void getAllTimetablesByDateOfActivityIsNullOrNotNull() throws Exception {
+        // Initialize the database
+        insertedTimetable = timetableRepository.saveAndFlush(timetable);
+
+        // Get all the timetableList where dateOfActivity is not null
+        defaultTimetableFiltering("dateOfActivity.specified=true", "dateOfActivity.specified=false");
+    }
+
+    @Test
+    @Transactional
+    void getAllTimetablesByDateOfActivityIsGreaterThanOrEqualToSomething() throws Exception {
+        // Initialize the database
+        insertedTimetable = timetableRepository.saveAndFlush(timetable);
+
+        // Get all the timetableList where dateOfActivity is greater than or equal to
+        defaultTimetableFiltering(
+            "dateOfActivity.greaterThanOrEqual=" + DEFAULT_DATE_OF_ACTIVITY,
+            "dateOfActivity.greaterThanOrEqual=" + UPDATED_DATE_OF_ACTIVITY
+        );
+    }
+
+    @Test
+    @Transactional
+    void getAllTimetablesByDateOfActivityIsLessThanOrEqualToSomething() throws Exception {
+        // Initialize the database
+        insertedTimetable = timetableRepository.saveAndFlush(timetable);
+
+        // Get all the timetableList where dateOfActivity is less than or equal to
+        defaultTimetableFiltering(
+            "dateOfActivity.lessThanOrEqual=" + DEFAULT_DATE_OF_ACTIVITY,
+            "dateOfActivity.lessThanOrEqual=" + SMALLER_DATE_OF_ACTIVITY
+        );
+    }
+
+    @Test
+    @Transactional
+    void getAllTimetablesByDateOfActivityIsLessThanSomething() throws Exception {
+        // Initialize the database
+        insertedTimetable = timetableRepository.saveAndFlush(timetable);
+
+        // Get all the timetableList where dateOfActivity is less than
+        defaultTimetableFiltering(
+            "dateOfActivity.lessThan=" + UPDATED_DATE_OF_ACTIVITY,
+            "dateOfActivity.lessThan=" + DEFAULT_DATE_OF_ACTIVITY
+        );
+    }
+
+    @Test
+    @Transactional
+    void getAllTimetablesByDateOfActivityIsGreaterThanSomething() throws Exception {
+        // Initialize the database
+        insertedTimetable = timetableRepository.saveAndFlush(timetable);
+
+        // Get all the timetableList where dateOfActivity is greater than
+        defaultTimetableFiltering(
+            "dateOfActivity.greaterThan=" + SMALLER_DATE_OF_ACTIVITY,
+            "dateOfActivity.greaterThan=" + DEFAULT_DATE_OF_ACTIVITY
+        );
     }
 
     @Test
@@ -519,6 +647,72 @@ class TimetableResourceIT {
         defaultTimetableFiltering("activity.doesNotContain=" + UPDATED_ACTIVITY, "activity.doesNotContain=" + DEFAULT_ACTIVITY);
     }
 
+    @Test
+    @Transactional
+    void getAllTimetablesByIsDoneIsEqualToSomething() throws Exception {
+        // Initialize the database
+        insertedTimetable = timetableRepository.saveAndFlush(timetable);
+
+        // Get all the timetableList where isDone equals to
+        defaultTimetableFiltering("isDone.equals=" + DEFAULT_IS_DONE, "isDone.equals=" + UPDATED_IS_DONE);
+    }
+
+    @Test
+    @Transactional
+    void getAllTimetablesByIsDoneIsInShouldWork() throws Exception {
+        // Initialize the database
+        insertedTimetable = timetableRepository.saveAndFlush(timetable);
+
+        // Get all the timetableList where isDone in
+        defaultTimetableFiltering("isDone.in=" + DEFAULT_IS_DONE + "," + UPDATED_IS_DONE, "isDone.in=" + UPDATED_IS_DONE);
+    }
+
+    @Test
+    @Transactional
+    void getAllTimetablesByIsDoneIsNullOrNotNull() throws Exception {
+        // Initialize the database
+        insertedTimetable = timetableRepository.saveAndFlush(timetable);
+
+        // Get all the timetableList where isDone is not null
+        defaultTimetableFiltering("isDone.specified=true", "isDone.specified=false");
+    }
+
+    @Test
+    @Transactional
+    void getAllTimetablesByLevelOfImportanceIsEqualToSomething() throws Exception {
+        // Initialize the database
+        insertedTimetable = timetableRepository.saveAndFlush(timetable);
+
+        // Get all the timetableList where levelOfImportance equals to
+        defaultTimetableFiltering(
+            "levelOfImportance.equals=" + DEFAULT_LEVEL_OF_IMPORTANCE,
+            "levelOfImportance.equals=" + UPDATED_LEVEL_OF_IMPORTANCE
+        );
+    }
+
+    @Test
+    @Transactional
+    void getAllTimetablesByLevelOfImportanceIsInShouldWork() throws Exception {
+        // Initialize the database
+        insertedTimetable = timetableRepository.saveAndFlush(timetable);
+
+        // Get all the timetableList where levelOfImportance in
+        defaultTimetableFiltering(
+            "levelOfImportance.in=" + DEFAULT_LEVEL_OF_IMPORTANCE + "," + UPDATED_LEVEL_OF_IMPORTANCE,
+            "levelOfImportance.in=" + UPDATED_LEVEL_OF_IMPORTANCE
+        );
+    }
+
+    @Test
+    @Transactional
+    void getAllTimetablesByLevelOfImportanceIsNullOrNotNull() throws Exception {
+        // Initialize the database
+        insertedTimetable = timetableRepository.saveAndFlush(timetable);
+
+        // Get all the timetableList where levelOfImportance is not null
+        defaultTimetableFiltering("levelOfImportance.specified=true", "levelOfImportance.specified=false");
+    }
+
     private void defaultTimetableFiltering(String shouldBeFound, String shouldNotBeFound) throws Exception {
         defaultTimetableShouldBeFound(shouldBeFound);
         defaultTimetableShouldNotBeFound(shouldNotBeFound);
@@ -534,10 +728,13 @@ class TimetableResourceIT {
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
             .andExpect(jsonPath("$.[*].id").value(hasItem(timetable.getId().intValue())))
             .andExpect(jsonPath("$.[*].appUserId").value(hasItem(DEFAULT_APP_USER_ID.intValue())))
-            .andExpect(jsonPath("$.[*].dayOfWeek").value(hasItem(DEFAULT_DAY_OF_WEEK.toString())))
+            .andExpect(jsonPath("$.[*].dayOfWeek").value(hasItem(DEFAULT_DAY_OF_WEEK)))
+            .andExpect(jsonPath("$.[*].dateOfActivity").value(hasItem(DEFAULT_DATE_OF_ACTIVITY.toString())))
             .andExpect(jsonPath("$.[*].startTime").value(hasItem(sameInstant(DEFAULT_START_TIME))))
             .andExpect(jsonPath("$.[*].endTime").value(hasItem(sameInstant(DEFAULT_END_TIME))))
-            .andExpect(jsonPath("$.[*].activity").value(hasItem(DEFAULT_ACTIVITY)));
+            .andExpect(jsonPath("$.[*].activity").value(hasItem(DEFAULT_ACTIVITY)))
+            .andExpect(jsonPath("$.[*].isDone").value(hasItem(DEFAULT_IS_DONE.booleanValue())))
+            .andExpect(jsonPath("$.[*].levelOfImportance").value(hasItem(DEFAULT_LEVEL_OF_IMPORTANCE.toString())));
 
         // Check, that the count call also returns 1
         restTimetableMockMvc
@@ -588,9 +785,12 @@ class TimetableResourceIT {
         updatedTimetable
             .appUserId(UPDATED_APP_USER_ID)
             .dayOfWeek(UPDATED_DAY_OF_WEEK)
+            .dateOfActivity(UPDATED_DATE_OF_ACTIVITY)
             .startTime(UPDATED_START_TIME)
             .endTime(UPDATED_END_TIME)
-            .activity(UPDATED_ACTIVITY);
+            .activity(UPDATED_ACTIVITY)
+            .isDone(UPDATED_IS_DONE)
+            .levelOfImportance(UPDATED_LEVEL_OF_IMPORTANCE);
         TimetableDTO timetableDTO = timetableMapper.toDto(updatedTimetable);
 
         restTimetableMockMvc
@@ -682,10 +882,9 @@ class TimetableResourceIT {
 
         partialUpdatedTimetable
             .appUserId(UPDATED_APP_USER_ID)
-            .dayOfWeek(UPDATED_DAY_OF_WEEK)
-            .startTime(UPDATED_START_TIME)
-            .endTime(UPDATED_END_TIME)
-            .activity(UPDATED_ACTIVITY);
+            .dateOfActivity(UPDATED_DATE_OF_ACTIVITY)
+            .activity(UPDATED_ACTIVITY)
+            .isDone(UPDATED_IS_DONE);
 
         restTimetableMockMvc
             .perform(
@@ -719,9 +918,12 @@ class TimetableResourceIT {
         partialUpdatedTimetable
             .appUserId(UPDATED_APP_USER_ID)
             .dayOfWeek(UPDATED_DAY_OF_WEEK)
+            .dateOfActivity(UPDATED_DATE_OF_ACTIVITY)
             .startTime(UPDATED_START_TIME)
             .endTime(UPDATED_END_TIME)
-            .activity(UPDATED_ACTIVITY);
+            .activity(UPDATED_ACTIVITY)
+            .isDone(UPDATED_IS_DONE)
+            .levelOfImportance(UPDATED_LEVEL_OF_IMPORTANCE);
 
         restTimetableMockMvc
             .perform(

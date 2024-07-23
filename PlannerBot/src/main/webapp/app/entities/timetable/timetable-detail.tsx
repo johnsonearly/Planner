@@ -37,6 +37,14 @@ export const TimetableDetail = () => {
           </dt>
           <dd>{timetableEntity.dayOfWeek}</dd>
           <dt>
+            <span id="dateOfActivity">Date Of Activity</span>
+          </dt>
+          <dd>
+            {timetableEntity.dateOfActivity ? (
+              <TextFormat value={timetableEntity.dateOfActivity} type="date" format={APP_LOCAL_DATE_FORMAT} />
+            ) : null}
+          </dd>
+          <dt>
             <span id="startTime">Start Time</span>
           </dt>
           <dd>
@@ -50,6 +58,14 @@ export const TimetableDetail = () => {
             <span id="activity">Activity</span>
           </dt>
           <dd>{timetableEntity.activity}</dd>
+          <dt>
+            <span id="isDone">Is Done</span>
+          </dt>
+          <dd>{timetableEntity.isDone ? 'true' : 'false'}</dd>
+          <dt>
+            <span id="levelOfImportance">Level Of Importance</span>
+          </dt>
+          <dd>{timetableEntity.levelOfImportance}</dd>
         </dl>
         <Button tag={Link} to="/timetable" replace color="info" data-cy="entityDetailsBackButton">
           <FontAwesomeIcon icon="arrow-left" /> <span className="d-none d-md-inline">Back</span>

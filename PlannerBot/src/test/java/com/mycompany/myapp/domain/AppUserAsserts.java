@@ -53,7 +53,8 @@ public class AppUserAsserts {
             .satisfies(e -> assertThat(e.getChronotype()).as("check chronotype").isEqualTo(actual.getChronotype()))
             .satisfies(e -> assertThat(e.getReadingType()).as("check readingType").isEqualTo(actual.getReadingType()))
             .satisfies(e -> assertThat(e.getAttentionSpan()).as("check attentionSpan").isEqualTo(actual.getAttentionSpan()))
-            .satisfies(e -> assertThat(e.getGender()).as("check gender").isEqualTo(actual.getGender()));
+            .satisfies(e -> assertThat(e.getGender()).as("check gender").isEqualTo(actual.getGender()))
+            .satisfies(e -> assertThat(e.getReadingStrategy()).as("check readingStrategy").isEqualTo(actual.getReadingStrategy()));
     }
 
     /**

@@ -1,0 +1,23 @@
+{
+  "annotations": {
+    "changelogDate": "20240718215600"
+  },
+  "applications": "*",
+  "dto": "mapstruct",
+  "fields": [
+    {
+      "fieldName": "start",
+      "fieldType": "ZonedDateTime"
+    },
+    {
+      "fieldName": "end",
+      "fieldType": "ZonedDateTime"
+    }
+  ],
+  "jpaMetamodelFiltering": true,
+  "name": "FreeTime",
+  "pagination": "pagination",
+  "relationships": [],
+  "searchEngine": "no",
+  "service": "serviceImpl"
+}

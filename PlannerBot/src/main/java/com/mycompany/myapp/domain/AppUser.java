@@ -3,6 +3,7 @@ package com.mycompany.myapp.domain;
 import com.mycompany.myapp.domain.enumeration.AttentionSpan;
 import com.mycompany.myapp.domain.enumeration.Chronotype;
 import com.mycompany.myapp.domain.enumeration.Gender;
+import com.mycompany.myapp.domain.enumeration.ReadingStrategy;
 import com.mycompany.myapp.domain.enumeration.ReadingType;
 import jakarta.persistence.*;
 import java.io.Serializable;
@@ -46,6 +47,10 @@ public class AppUser implements Serializable {
     @Enumerated(EnumType.STRING)
     @Column(name = "gender")
     private Gender gender;
+
+    @Enumerated(EnumType.STRING)
+    @Column(name = "reading_strategy")
+    private ReadingStrategy readingStrategy;
 
     // jhipster-needle-entity-add-field - JHipster will add fields here
 
@@ -153,6 +158,19 @@ public class AppUser implements Serializable {
         this.gender = gender;
     }
 
+    public ReadingStrategy getReadingStrategy() {
+        return this.readingStrategy;
+    }
+
+    public AppUser readingStrategy(ReadingStrategy readingStrategy) {
+        this.setReadingStrategy(readingStrategy);
+        return this;
+    }
+
+    public void setReadingStrategy(ReadingStrategy readingStrategy) {
+        this.readingStrategy = readingStrategy;
+    }
+
     // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here
 
     @Override
@@ -184,6 +202,7 @@ public class AppUser implements Serializable {
             ", readingType='" + getReadingType() + "'" +
             ", attentionSpan='" + getAttentionSpan() + "'" +
             ", gender='" + getGender() + "'" +
+            ", readingStrategy='" + getReadingStrategy() + "'" +
             "}";
     }
 }

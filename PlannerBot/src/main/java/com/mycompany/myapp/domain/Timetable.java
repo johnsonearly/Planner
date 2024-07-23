@@ -1,8 +1,9 @@
 package com.mycompany.myapp.domain;
 
-import com.mycompany.myapp.domain.enumeration.Day;
+import com.mycompany.myapp.domain.enumeration.Importance;
 import jakarta.persistence.*;
 import java.io.Serializable;
+import java.time.LocalDate;
 import java.time.ZonedDateTime;
 
 /**
@@ -23,9 +24,11 @@ public class Timetable implements Serializable {
     @Column(name = "app_user_id")
     private Long appUserId;
 
-    @Enumerated(EnumType.STRING)
     @Column(name = "day_of_week")
-    private Day dayOfWeek;
+    private String dayOfWeek;
+
+    @Column(name = "date_of_activity")
+    private LocalDate dateOfActivity;
 
     @Column(name = "start_time")
     private ZonedDateTime startTime;
@@ -35,6 +38,13 @@ public class Timetable implements Serializable {
 
     @Column(name = "activity")
     private String activity;
+
+    @Column(name = "is_done")
+    private Boolean isDone;
+
+    @Enumerated(EnumType.STRING)
+    @Column(name = "level_of_importance")
+    private Importance levelOfImportance;
 
     // jhipster-needle-entity-add-field - JHipster will add fields here
 
@@ -64,17 +74,30 @@ public class Timetable implements Serializable {
         this.appUserId = appUserId;
     }
 
-    public Day getDayOfWeek() {
+    public String getDayOfWeek() {
         return this.dayOfWeek;
     }
 
-    public Timetable dayOfWeek(Day dayOfWeek) {
+    public Timetable dayOfWeek(String dayOfWeek) {
         this.setDayOfWeek(dayOfWeek);
         return this;
     }
 
-    public void setDayOfWeek(Day dayOfWeek) {
+    public void setDayOfWeek(String dayOfWeek) {
         this.dayOfWeek = dayOfWeek;
+    }
+
+    public LocalDate getDateOfActivity() {
+        return this.dateOfActivity;
+    }
+
+    public Timetable dateOfActivity(LocalDate dateOfActivity) {
+        this.setDateOfActivity(dateOfActivity);
+        return this;
+    }
+
+    public void setDateOfActivity(LocalDate dateOfActivity) {
+        this.dateOfActivity = dateOfActivity;
     }
 
     public ZonedDateTime getStartTime() {
@@ -116,6 +139,32 @@ public class Timetable implements Serializable {
         this.activity = activity;
     }
 
+    public Boolean getIsDone() {
+        return this.isDone;
+    }
+
+    public Timetable isDone(Boolean isDone) {
+        this.setIsDone(isDone);
+        return this;
+    }
+
+    public void setIsDone(Boolean isDone) {
+        this.isDone = isDone;
+    }
+
+    public Importance getLevelOfImportance() {
+        return this.levelOfImportance;
+    }
+
+    public Timetable levelOfImportance(Importance levelOfImportance) {
+        this.setLevelOfImportance(levelOfImportance);
+        return this;
+    }
+
+    public void setLevelOfImportance(Importance levelOfImportance) {
+        this.levelOfImportance = levelOfImportance;
+    }
+
     // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here
 
     @Override
@@ -142,9 +191,12 @@ public class Timetable implements Serializable {
             "id=" + getId() +
             ", appUserId=" + getAppUserId() +
             ", dayOfWeek='" + getDayOfWeek() + "'" +
+            ", dateOfActivity='" + getDateOfActivity() + "'" +
             ", startTime='" + getStartTime() + "'" +
             ", endTime='" + getEndTime() + "'" +
             ", activity='" + getActivity() + "'" +
+            ", isDone='" + getIsDone() + "'" +
+            ", levelOfImportance='" + getLevelOfImportance() + "'" +
             "}";
     }
 }

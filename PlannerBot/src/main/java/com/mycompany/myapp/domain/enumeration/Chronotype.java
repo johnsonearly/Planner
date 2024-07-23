@@ -5,5 +5,5 @@ package com.mycompany.myapp.domain.enumeration;
  */
 public enum Chronotype {
     MORNING,
-    AFTERNOON,
+    NIGHT,
 }

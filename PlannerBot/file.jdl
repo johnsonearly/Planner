@@ -1,4 +1,5 @@
 entity AppUser{
+
         name String
         age Integer
         appUserId Long
@@ -6,36 +7,42 @@ entity AppUser{
         readingType ReadingType
         attentionSpan AttentionSpan
         gender Gender
-
+        readingStrategy ReadingStrategy
 
 }
 
 
 entity Timetable{
     appUserId Long
-    dayOfWeek Day
+    dayOfWeek String
+    dateOfActivity LocalDate
     startTime ZonedDateTime
     endTime ZonedDateTime
     activity String
+    isDone Boolean
+    levelOfImportance Importance
+}
+enum Importance{
+    LOW
+    MEDIUM
+    HIGH
+}
+enum ReadingStrategy{
+    SPACED_REPETITION
+    ACTIVE_RECALL
+    SQ3R_METHOD
+    POMODORO_TECHNIQUE
+
 }
 
-enum Day{
-    MONDAY
-    TUESDAY
-    WEDNESDAY
-    THURSDAY
-    FRIDAY
-    SATURDAY
-    SUNDAY
-}
+
 enum  Chronotype{
     MORNING
-    AFTERNOON
+    NIGHT
 }
 enum ReadingType{
-    MORNING
-    AFTERNOON
-    EVENING
+    INTENSIVE
+    EXTENSIVE
 }
 enum AttentionSpan{
     SHORT
@@ -46,6 +53,22 @@ enum Gender{
     MALE
     FEMALE
 }
+entity Course{
+
+    appUserId Long
+    courseName String
+    difficulty Difficulty
+}
+enum  Difficulty{
+    LOW
+    MEDIUM
+    HIGH
+
+}
+
+
+
+
 // Set pagination options
 paginate * with pagination
 

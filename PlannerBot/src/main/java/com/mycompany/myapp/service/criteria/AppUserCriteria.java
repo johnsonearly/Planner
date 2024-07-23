@@ -3,6 +3,7 @@ package com.mycompany.myapp.service.criteria;
 import com.mycompany.myapp.domain.enumeration.AttentionSpan;
 import com.mycompany.myapp.domain.enumeration.Chronotype;
 import com.mycompany.myapp.domain.enumeration.Gender;
+import com.mycompany.myapp.domain.enumeration.ReadingStrategy;
 import com.mycompany.myapp.domain.enumeration.ReadingType;
 import java.io.Serializable;
 import java.util.Objects;
@@ -92,6 +93,23 @@ public class AppUserCriteria implements Serializable, Criteria {
         }
     }
 
+    /**
+     * Class for filtering ReadingStrategy
+     */
+    public static class ReadingStrategyFilter extends Filter<ReadingStrategy> {
+
+        public ReadingStrategyFilter() {}
+
+        public ReadingStrategyFilter(ReadingStrategyFilter filter) {
+            super(filter);
+        }
+
+        @Override
+        public ReadingStrategyFilter copy() {
+            return new ReadingStrategyFilter(this);
+        }
+    }
+
     private static final long serialVersionUID = 1L;
 
     private LongFilter id;
@@ -110,6 +128,8 @@ public class AppUserCriteria implements Serializable, Criteria {
 
     private GenderFilter gender;
 
+    private ReadingStrategyFilter readingStrategy;
+
     private Boolean distinct;
 
     public AppUserCriteria() {}
@@ -123,6 +143,7 @@ public class AppUserCriteria implements Serializable, Criteria {
         this.readingType = other.optionalReadingType().map(ReadingTypeFilter::copy).orElse(null);
         this.attentionSpan = other.optionalAttentionSpan().map(AttentionSpanFilter::copy).orElse(null);
         this.gender = other.optionalGender().map(GenderFilter::copy).orElse(null);
+        this.readingStrategy = other.optionalReadingStrategy().map(ReadingStrategyFilter::copy).orElse(null);
         this.distinct = other.distinct;
     }
 
@@ -283,6 +304,25 @@ public class AppUserCriteria implements Serializable, Criteria {
         this.gender = gender;
     }
 
+    public ReadingStrategyFilter getReadingStrategy() {
+        return readingStrategy;
+    }
+
+    public Optional<ReadingStrategyFilter> optionalReadingStrategy() {
+        return Optional.ofNullable(readingStrategy);
+    }
+
+    public ReadingStrategyFilter readingStrategy() {
+        if (readingStrategy == null) {
+            setReadingStrategy(new ReadingStrategyFilter());
+        }
+        return readingStrategy;
+    }
+
+    public void setReadingStrategy(ReadingStrategyFilter readingStrategy) {
+        this.readingStrategy = readingStrategy;
+    }
+
     public Boolean getDistinct() {
         return distinct;
     }
@@ -320,13 +360,14 @@ public class AppUserCriteria implements Serializable, Criteria {
             Objects.equals(readingType, that.readingType) &&
             Objects.equals(attentionSpan, that.attentionSpan) &&
             Objects.equals(gender, that.gender) &&
+            Objects.equals(readingStrategy, that.readingStrategy) &&
             Objects.equals(distinct, that.distinct)
         );
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, name, age, appUserId, chronotype, readingType, attentionSpan, gender, distinct);
+        return Objects.hash(id, name, age, appUserId, chronotype, readingType, attentionSpan, gender, readingStrategy, distinct);
     }
 
     // prettier-ignore
@@ -341,6 +382,7 @@ public class AppUserCriteria implements Serializable, Criteria {
             optionalReadingType().map(f -> "readingType=" + f + ", ").orElse("") +
             optionalAttentionSpan().map(f -> "attentionSpan=" + f + ", ").orElse("") +
             optionalGender().map(f -> "gender=" + f + ", ").orElse("") +
+            optionalReadingStrategy().map(f -> "readingStrategy=" + f + ", ").orElse("") +
             optionalDistinct().map(f -> "distinct=" + f + ", ").orElse("") +
         "}";
     }

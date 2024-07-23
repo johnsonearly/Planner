@@ -80,7 +80,10 @@ public class TimetableQueryService extends QueryService<Timetable> {
                 specification = specification.and(buildRangeSpecification(criteria.getAppUserId(), Timetable_.appUserId));
             }
             if (criteria.getDayOfWeek() != null) {
-                specification = specification.and(buildSpecification(criteria.getDayOfWeek(), Timetable_.dayOfWeek));
+                specification = specification.and(buildStringSpecification(criteria.getDayOfWeek(), Timetable_.dayOfWeek));
+            }
+            if (criteria.getDateOfActivity() != null) {
+                specification = specification.and(buildRangeSpecification(criteria.getDateOfActivity(), Timetable_.dateOfActivity));
             }
             if (criteria.getStartTime() != null) {
                 specification = specification.and(buildRangeSpecification(criteria.getStartTime(), Timetable_.startTime));
@@ -90,6 +93,12 @@ public class TimetableQueryService extends QueryService<Timetable> {
             }
             if (criteria.getActivity() != null) {
                 specification = specification.and(buildStringSpecification(criteria.getActivity(), Timetable_.activity));
+            }
+            if (criteria.getIsDone() != null) {
+                specification = specification.and(buildSpecification(criteria.getIsDone(), Timetable_.isDone));
+            }
+            if (criteria.getLevelOfImportance() != null) {
+                specification = specification.and(buildSpecification(criteria.getLevelOfImportance(), Timetable_.levelOfImportance));
             }
         }
         return specification;

@@ -9,7 +9,7 @@ import { mapIdList } from 'app/shared/util/entity-utils';
 import { useAppDispatch, useAppSelector } from 'app/config/store';
 
 import { ITimetable } from 'app/shared/model/timetable.model';
-import { Day } from 'app/shared/model/enumerations/day.model';
+import { Importance } from 'app/shared/model/enumerations/importance.model';
 import { getEntity, updateEntity, createEntity, reset } from './timetable.reducer';
 
 export const TimetableUpdate = () => {
@@ -24,7 +24,7 @@ export const TimetableUpdate = () => {
   const loading = useAppSelector(state => state.timetable.loading);
   const updating = useAppSelector(state => state.timetable.updating);
   const updateSuccess = useAppSelector(state => state.timetable.updateSuccess);
-  const dayValues = Object.keys(Day);
+  const importanceValues = Object.keys(Importance);
 
   const handleClose = () => {
     navigate('/timetable' + location.search);
@@ -74,7 +74,7 @@ export const TimetableUpdate = () => {
           endTime: displayDefaultDateTime(),
         }
       : {
-          dayOfWeek: 'MONDAY',
+          levelOfImportance: 'LOW',
           ...timetableEntity,
           startTime: convertDateTimeFromServer(timetableEntity.startTime),
           endTime: convertDateTimeFromServer(timetableEntity.endTime),
@@ -97,13 +97,14 @@ export const TimetableUpdate = () => {
             <ValidatedForm defaultValues={defaultValues()} onSubmit={saveEntity}>
               {!isNew ? <ValidatedField name="id" required readOnly id="timetable-id" label="ID" validate={{ required: true }} /> : null}
               <ValidatedField label="App User Id" id="timetable-appUserId" name="appUserId" data-cy="appUserId" type="text" />
-              <ValidatedField label="Day Of Week" id="timetable-dayOfWeek" name="dayOfWeek" data-cy="dayOfWeek" type="select">
-                {dayValues.map(day => (
-                  <option value={day} key={day}>
-                    {day}
-                  </option>
-                ))}
-              </ValidatedField>
+              <ValidatedField label="Day Of Week" id="timetable-dayOfWeek" name="dayOfWeek" data-cy="dayOfWeek" type="text" />
+              <ValidatedField
+                label="Date Of Activity"
+                id="timetable-dateOfActivity"
+                name="dateOfActivity"
+                data-cy="dateOfActivity"
+                type="date"
+              />
               <ValidatedField
                 label="Start Time"
                 id="timetable-startTime"
@@ -121,6 +122,20 @@ export const TimetableUpdate = () => {
                 placeholder="YYYY-MM-DD HH:mm"
               />
               <ValidatedField label="Activity" id="timetable-activity" name="activity" data-cy="activity" type="text" />
+              <ValidatedField label="Is Done" id="timetable-isDone" name="isDone" data-cy="isDone" check type="checkbox" />
+              <ValidatedField
+                label="Level Of Importance"
+                id="timetable-levelOfImportance"
+                name="levelOfImportance"
+                data-cy="levelOfImportance"
+                type="select"
+              >
+                {importanceValues.map(importance => (
+                  <option value={importance} key={importance}>
+                    {importance}
+                  </option>
+                ))}
+              </ValidatedField>
               <Button tag={Link} id="cancel-save" data-cy="entityCreateCancelButton" to="/timetable" replace color="info">
                 <FontAwesomeIcon icon="arrow-left" />
                 &nbsp;

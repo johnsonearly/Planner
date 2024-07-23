@@ -118,6 +118,9 @@ export const Timetable = () => {
                 <th className="hand" onClick={sort('dayOfWeek')}>
                   Day Of Week <FontAwesomeIcon icon={getSortIconByFieldName('dayOfWeek')} />
                 </th>
+                <th className="hand" onClick={sort('dateOfActivity')}>
+                  Date Of Activity <FontAwesomeIcon icon={getSortIconByFieldName('dateOfActivity')} />
+                </th>
                 <th className="hand" onClick={sort('startTime')}>
                   Start Time <FontAwesomeIcon icon={getSortIconByFieldName('startTime')} />
                 </th>
@@ -126,6 +129,12 @@ export const Timetable = () => {
                 </th>
                 <th className="hand" onClick={sort('activity')}>
                   Activity <FontAwesomeIcon icon={getSortIconByFieldName('activity')} />
+                </th>
+                <th className="hand" onClick={sort('isDone')}>
+                  Is Done <FontAwesomeIcon icon={getSortIconByFieldName('isDone')} />
+                </th>
+                <th className="hand" onClick={sort('levelOfImportance')}>
+                  Level Of Importance <FontAwesomeIcon icon={getSortIconByFieldName('levelOfImportance')} />
                 </th>
                 <th />
               </tr>
@@ -140,9 +149,16 @@ export const Timetable = () => {
                   </td>
                   <td>{timetable.appUserId}</td>
                   <td>{timetable.dayOfWeek}</td>
+                  <td>
+                    {timetable.dateOfActivity ? (
+                      <TextFormat type="date" value={timetable.dateOfActivity} format={APP_LOCAL_DATE_FORMAT} />
+                    ) : null}
+                  </td>
                   <td>{timetable.startTime ? <TextFormat type="date" value={timetable.startTime} format={APP_DATE_FORMAT} /> : null}</td>
                   <td>{timetable.endTime ? <TextFormat type="date" value={timetable.endTime} format={APP_DATE_FORMAT} /> : null}</td>
                   <td>{timetable.activity}</td>
+                  <td>{timetable.isDone ? 'true' : 'false'}</td>
+                  <td>{timetable.levelOfImportance}</td>
                   <td className="text-end">
                     <div className="btn-group flex-btn-group-container">
                       <Button tag={Link} to={`/timetable/${timetable.id}`} color="info" size="sm" data-cy="entityDetailsButton">

@@ -13,6 +13,7 @@ import com.mycompany.myapp.domain.AppUser;
 import com.mycompany.myapp.domain.enumeration.AttentionSpan;
 import com.mycompany.myapp.domain.enumeration.Chronotype;
 import com.mycompany.myapp.domain.enumeration.Gender;
+import com.mycompany.myapp.domain.enumeration.ReadingStrategy;
 import com.mycompany.myapp.domain.enumeration.ReadingType;
 import com.mycompany.myapp.repository.AppUserRepository;
 import com.mycompany.myapp.service.dto.AppUserDTO;
@@ -50,16 +51,19 @@ class AppUserResourceIT {
     private static final Long SMALLER_APP_USER_ID = 1L - 1L;
 
     private static final Chronotype DEFAULT_CHRONOTYPE = Chronotype.MORNING;
-    private static final Chronotype UPDATED_CHRONOTYPE = Chronotype.AFTERNOON;
+    private static final Chronotype UPDATED_CHRONOTYPE = Chronotype.NIGHT;
 
-    private static final ReadingType DEFAULT_READING_TYPE = ReadingType.MORNING;
-    private static final ReadingType UPDATED_READING_TYPE = ReadingType.AFTERNOON;
+    private static final ReadingType DEFAULT_READING_TYPE = ReadingType.INTENSIVE;
+    private static final ReadingType UPDATED_READING_TYPE = ReadingType.EXTENSIVE;
 
     private static final AttentionSpan DEFAULT_ATTENTION_SPAN = AttentionSpan.SHORT;
     private static final AttentionSpan UPDATED_ATTENTION_SPAN = AttentionSpan.MEDIUM;
 
     private static final Gender DEFAULT_GENDER = Gender.MALE;
     private static final Gender UPDATED_GENDER = Gender.FEMALE;
+
+    private static final ReadingStrategy DEFAULT_READING_STRATEGY = ReadingStrategy.SPACED_REPETITION;
+    private static final ReadingStrategy UPDATED_READING_STRATEGY = ReadingStrategy.ACTIVE_RECALL;
 
     private static final String ENTITY_API_URL = "/api/app-users";
     private static final String ENTITY_API_URL_ID = ENTITY_API_URL + "/{id}";
@@ -100,7 +104,8 @@ class AppUserResourceIT {
             .chronotype(DEFAULT_CHRONOTYPE)
             .readingType(DEFAULT_READING_TYPE)
             .attentionSpan(DEFAULT_ATTENTION_SPAN)
-            .gender(DEFAULT_GENDER);
+            .gender(DEFAULT_GENDER)
+            .readingStrategy(DEFAULT_READING_STRATEGY);
         return appUser;
     }
 
@@ -118,7 +123,8 @@ class AppUserResourceIT {
             .chronotype(UPDATED_CHRONOTYPE)
             .readingType(UPDATED_READING_TYPE)
             .attentionSpan(UPDATED_ATTENTION_SPAN)
-            .gender(UPDATED_GENDER);
+            .gender(UPDATED_GENDER)
+            .readingStrategy(UPDATED_READING_STRATEGY);
         return appUser;
     }
 
@@ -195,7 +201,8 @@ class AppUserResourceIT {
             .andExpect(jsonPath("$.[*].chronotype").value(hasItem(DEFAULT_CHRONOTYPE.toString())))
             .andExpect(jsonPath("$.[*].readingType").value(hasItem(DEFAULT_READING_TYPE.toString())))
             .andExpect(jsonPath("$.[*].attentionSpan").value(hasItem(DEFAULT_ATTENTION_SPAN.toString())))
-            .andExpect(jsonPath("$.[*].gender").value(hasItem(DEFAULT_GENDER.toString())));
+            .andExpect(jsonPath("$.[*].gender").value(hasItem(DEFAULT_GENDER.toString())))
+            .andExpect(jsonPath("$.[*].readingStrategy").value(hasItem(DEFAULT_READING_STRATEGY.toString())));
     }
 
     @Test
@@ -216,7 +223,8 @@ class AppUserResourceIT {
             .andExpect(jsonPath("$.chronotype").value(DEFAULT_CHRONOTYPE.toString()))
             .andExpect(jsonPath("$.readingType").value(DEFAULT_READING_TYPE.toString()))
             .andExpect(jsonPath("$.attentionSpan").value(DEFAULT_ATTENTION_SPAN.toString()))
-            .andExpect(jsonPath("$.gender").value(DEFAULT_GENDER.toString()));
+            .andExpect(jsonPath("$.gender").value(DEFAULT_GENDER.toString()))
+            .andExpect(jsonPath("$.readingStrategy").value(DEFAULT_READING_STRATEGY.toString()));
     }
 
     @Test
@@ -553,6 +561,39 @@ class AppUserResourceIT {
         defaultAppUserFiltering("gender.specified=true", "gender.specified=false");
     }
 
+    @Test
+    @Transactional
+    void getAllAppUsersByReadingStrategyIsEqualToSomething() throws Exception {
+        // Initialize the database
+        insertedAppUser = appUserRepository.saveAndFlush(appUser);
+
+        // Get all the appUserList where readingStrategy equals to
+        defaultAppUserFiltering("readingStrategy.equals=" + DEFAULT_READING_STRATEGY, "readingStrategy.equals=" + UPDATED_READING_STRATEGY);
+    }
+
+    @Test
+    @Transactional
+    void getAllAppUsersByReadingStrategyIsInShouldWork() throws Exception {
+        // Initialize the database
+        insertedAppUser = appUserRepository.saveAndFlush(appUser);
+
+        // Get all the appUserList where readingStrategy in
+        defaultAppUserFiltering(
+            "readingStrategy.in=" + DEFAULT_READING_STRATEGY + "," + UPDATED_READING_STRATEGY,
+            "readingStrategy.in=" + UPDATED_READING_STRATEGY
+        );
+    }
+
+    @Test
+    @Transactional
+    void getAllAppUsersByReadingStrategyIsNullOrNotNull() throws Exception {
+        // Initialize the database
+        insertedAppUser = appUserRepository.saveAndFlush(appUser);
+
+        // Get all the appUserList where readingStrategy is not null
+        defaultAppUserFiltering("readingStrategy.specified=true", "readingStrategy.specified=false");
+    }
+
     private void defaultAppUserFiltering(String shouldBeFound, String shouldNotBeFound) throws Exception {
         defaultAppUserShouldBeFound(shouldBeFound);
         defaultAppUserShouldNotBeFound(shouldNotBeFound);
@@ -573,7 +614,8 @@ class AppUserResourceIT {
             .andExpect(jsonPath("$.[*].chronotype").value(hasItem(DEFAULT_CHRONOTYPE.toString())))
             .andExpect(jsonPath("$.[*].readingType").value(hasItem(DEFAULT_READING_TYPE.toString())))
             .andExpect(jsonPath("$.[*].attentionSpan").value(hasItem(DEFAULT_ATTENTION_SPAN.toString())))
-            .andExpect(jsonPath("$.[*].gender").value(hasItem(DEFAULT_GENDER.toString())));
+            .andExpect(jsonPath("$.[*].gender").value(hasItem(DEFAULT_GENDER.toString())))
+            .andExpect(jsonPath("$.[*].readingStrategy").value(hasItem(DEFAULT_READING_STRATEGY.toString())));
 
         // Check, that the count call also returns 1
         restAppUserMockMvc
@@ -628,7 +670,8 @@ class AppUserResourceIT {
             .chronotype(UPDATED_CHRONOTYPE)
             .readingType(UPDATED_READING_TYPE)
             .attentionSpan(UPDATED_ATTENTION_SPAN)
-            .gender(UPDATED_GENDER);
+            .gender(UPDATED_GENDER)
+            .readingStrategy(UPDATED_READING_STRATEGY);
         AppUserDTO appUserDTO = appUserMapper.toDto(updatedAppUser);
 
         restAppUserMockMvc
@@ -714,7 +757,12 @@ class AppUserResourceIT {
         AppUser partialUpdatedAppUser = new AppUser();
         partialUpdatedAppUser.setId(appUser.getId());
 
-        partialUpdatedAppUser.name(UPDATED_NAME).appUserId(UPDATED_APP_USER_ID);
+        partialUpdatedAppUser
+            .name(UPDATED_NAME)
+            .age(UPDATED_AGE)
+            .appUserId(UPDATED_APP_USER_ID)
+            .attentionSpan(UPDATED_ATTENTION_SPAN)
+            .readingStrategy(UPDATED_READING_STRATEGY);
 
         restAppUserMockMvc
             .perform(
@@ -749,7 +797,8 @@ class AppUserResourceIT {
             .chronotype(UPDATED_CHRONOTYPE)
             .readingType(UPDATED_READING_TYPE)
             .attentionSpan(UPDATED_ATTENTION_SPAN)
-            .gender(UPDATED_GENDER);
+            .gender(UPDATED_GENDER)
+            .readingStrategy(UPDATED_READING_STRATEGY);
 
         restAppUserMockMvc
             .perform(
