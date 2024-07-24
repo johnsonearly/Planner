@@ -12,11 +12,11 @@ import java.util.List;
 @RestController
 @RequestMapping("api/v1")
 public class GenerateReadingPlan {
-//    @Autowired
-//    private ReadingPlanServiceImplementation readingPlanServiceImplementation;
-//
-//    @GetMapping("/generate/{appUserId}")
-//    public void generateReadingPlan(Long appUserId){
-//        readingPlanServiceImplementation.generateReadingPlan(appUserId);
-//    }
+    @Autowired
+    private ReadingPlanServiceImplementation readingPlanServiceImplementation;
+
+    @GetMapping("/generate/{appUserId}")
+    public void generateReadingPlan(Long appUserId){
+        readingPlanServiceImplementation.generateReadingPlan(appUserId);
+    }
 }
