@@ -54,7 +54,7 @@ management:
           include: readinessState,db
     jhimetrics:
       enabled: true
-  io:
+  info:
     git:
       mode: full
     env:

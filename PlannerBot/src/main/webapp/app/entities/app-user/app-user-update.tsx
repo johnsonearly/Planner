@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useNavigate, useParams } from 'react-router-dom';
 import { Button, Row, Col, FormText } from 'reactstrap';
-import { isNumber, ValidatedField, ValidatedForm } from 'react-jhipster';
+import { isNumber, Translate, translate, ValidatedField, ValidatedForm } from 'react-jhipster';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 import { convertDateTimeFromServer, convertDateTimeToServer, displayDefaultDateTime } from 'app/shared/util/date-utils';
@@ -93,7 +93,7 @@ export const AppUserUpdate = () => {
       <Row className="justify-content-center">
         <Col md="8">
           <h2 id="plannerBotApp.appUser.home.createOrEditLabel" data-cy="AppUserCreateUpdateHeading">
-            Create or edit a App User
+            <Translate contentKey="plannerBotApp.appUser.home.createOrEditLabel">Create or edit a AppUser</Translate>
           </h2>
         </Col>
       </Row>
@@ -103,40 +103,79 @@ export const AppUserUpdate = () => {
             <p>Loading...</p>
           ) : (
             <ValidatedForm defaultValues={defaultValues()} onSubmit={saveEntity}>
-              {!isNew ? <ValidatedField name="id" required readOnly id="app-user-id" label="ID" validate={{ required: true }} /> : null}
-              <ValidatedField label="Name" id="app-user-name" name="name" data-cy="name" type="text" />
-              <ValidatedField label="Age" id="app-user-age" name="age" data-cy="age" type="text" />
-              <ValidatedField label="App User Id" id="app-user-appUserId" name="appUserId" data-cy="appUserId" type="text" />
-              <ValidatedField label="Chronotype" id="app-user-chronotype" name="chronotype" data-cy="chronotype" type="select">
+              {!isNew ? (
+                <ValidatedField
+                  name="id"
+                  required
+                  readOnly
+                  id="app-user-id"
+                  label={translate('global.field.id')}
+                  validate={{ required: true }}
+                />
+              ) : null}
+              <ValidatedField label={translate('plannerBotApp.appUser.name')} id="app-user-name" name="name" data-cy="name" type="text" />
+              <ValidatedField label={translate('plannerBotApp.appUser.age')} id="app-user-age" name="age" data-cy="age" type="text" />
+              <ValidatedField
+                label={translate('plannerBotApp.appUser.appUserId')}
+                id="app-user-appUserId"
+                name="appUserId"
+                data-cy="appUserId"
+                type="text"
+              />
+              <ValidatedField
+                label={translate('plannerBotApp.appUser.chronotype')}
+                id="app-user-chronotype"
+                name="chronotype"
+                data-cy="chronotype"
+                type="select"
+              >
                 {chronotypeValues.map(chronotype => (
                   <option value={chronotype} key={chronotype}>
-                    {chronotype}
-                  </option>
-                ))}
-              </ValidatedField>
-              <ValidatedField label="Reading Type" id="app-user-readingType" name="readingType" data-cy="readingType" type="select">
-                {readingTypeValues.map(readingType => (
-                  <option value={readingType} key={readingType}>
-                    {readingType}
-                  </option>
-                ))}
-              </ValidatedField>
-              <ValidatedField label="Attention Span" id="app-user-attentionSpan" name="attentionSpan" data-cy="attentionSpan" type="select">
-                {attentionSpanValues.map(attentionSpan => (
-                  <option value={attentionSpan} key={attentionSpan}>
-                    {attentionSpan}
-                  </option>
-                ))}
-              </ValidatedField>
-              <ValidatedField label="Gender" id="app-user-gender" name="gender" data-cy="gender" type="select">
-                {genderValues.map(gender => (
-                  <option value={gender} key={gender}>
-                    {gender}
+                    {translate('plannerBotApp.Chronotype.' + chronotype)}
                   </option>
                 ))}
               </ValidatedField>
               <ValidatedField
-                label="Reading Strategy"
+                label={translate('plannerBotApp.appUser.readingType')}
+                id="app-user-readingType"
+                name="readingType"
+                data-cy="readingType"
+                type="select"
+              >
+                {readingTypeValues.map(readingType => (
+                  <option value={readingType} key={readingType}>
+                    {translate('plannerBotApp.ReadingType.' + readingType)}
+                  </option>
+                ))}
+              </ValidatedField>
+              <ValidatedField
+                label={translate('plannerBotApp.appUser.attentionSpan')}
+                id="app-user-attentionSpan"
+                name="attentionSpan"
+                data-cy="attentionSpan"
+                type="select"
+              >
+                {attentionSpanValues.map(attentionSpan => (
+                  <option value={attentionSpan} key={attentionSpan}>
+                    {translate('plannerBotApp.AttentionSpan.' + attentionSpan)}
+                  </option>
+                ))}
+              </ValidatedField>
+              <ValidatedField
+                label={translate('plannerBotApp.appUser.gender')}
+                id="app-user-gender"
+                name="gender"
+                data-cy="gender"
+                type="select"
+              >
+                {genderValues.map(gender => (
+                  <option value={gender} key={gender}>
+                    {translate('plannerBotApp.Gender.' + gender)}
+                  </option>
+                ))}
+              </ValidatedField>
+              <ValidatedField
+                label={translate('plannerBotApp.appUser.readingStrategy')}
                 id="app-user-readingStrategy"
                 name="readingStrategy"
                 data-cy="readingStrategy"
@@ -144,19 +183,22 @@ export const AppUserUpdate = () => {
               >
                 {readingStrategyValues.map(readingStrategy => (
                   <option value={readingStrategy} key={readingStrategy}>
-                    {readingStrategy}
+                    {translate('plannerBotApp.ReadingStrategy.' + readingStrategy)}
                   </option>
                 ))}
               </ValidatedField>
               <Button tag={Link} id="cancel-save" data-cy="entityCreateCancelButton" to="/app-user" replace color="info">
                 <FontAwesomeIcon icon="arrow-left" />
                 &nbsp;
-                <span className="d-none d-md-inline">Back</span>
+                <span className="d-none d-md-inline">
+                  <Translate contentKey="entity.action.back">Back</Translate>
+                </span>
               </Button>
               &nbsp;
               <Button color="primary" id="save-entity" data-cy="entityCreateSaveButton" type="submit" disabled={updating}>
                 <FontAwesomeIcon icon="save" />
-                &nbsp; Save
+                &nbsp;
+                <Translate contentKey="entity.action.save">Save</Translate>
               </Button>
             </ValidatedForm>
           )}

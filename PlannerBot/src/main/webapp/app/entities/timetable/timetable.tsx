@@ -93,14 +93,16 @@ export const Timetable = () => {
   return (
     <div>
       <h2 id="timetable-heading" data-cy="TimetableHeading">
-        Timetables
+        <Translate contentKey="plannerBotApp.timetable.home.title">Timetables</Translate>
         <div className="d-flex justify-content-end">
           <Button className="me-2" color="info" onClick={handleSyncList} disabled={loading}>
-            <FontAwesomeIcon icon="sync" spin={loading} /> Refresh list
+            <FontAwesomeIcon icon="sync" spin={loading} />{' '}
+            <Translate contentKey="plannerBotApp.timetable.home.refreshListLabel">Refresh List</Translate>
           </Button>
           <Link to="/timetable/new" className="btn btn-primary jh-create-entity" id="jh-create-entity" data-cy="entityCreateButton">
             <FontAwesomeIcon icon="plus" />
-            &nbsp; Create a new Timetable
+            &nbsp;
+            <Translate contentKey="plannerBotApp.timetable.home.createLabel">Create new Timetable</Translate>
           </Link>
         </div>
       </h2>
@@ -110,31 +112,39 @@ export const Timetable = () => {
             <thead>
               <tr>
                 <th className="hand" onClick={sort('id')}>
-                  ID <FontAwesomeIcon icon={getSortIconByFieldName('id')} />
+                  <Translate contentKey="plannerBotApp.timetable.id">ID</Translate> <FontAwesomeIcon icon={getSortIconByFieldName('id')} />
                 </th>
                 <th className="hand" onClick={sort('appUserId')}>
-                  App User Id <FontAwesomeIcon icon={getSortIconByFieldName('appUserId')} />
+                  <Translate contentKey="plannerBotApp.timetable.appUserId">App User Id</Translate>{' '}
+                  <FontAwesomeIcon icon={getSortIconByFieldName('appUserId')} />
                 </th>
                 <th className="hand" onClick={sort('dayOfWeek')}>
-                  Day Of Week <FontAwesomeIcon icon={getSortIconByFieldName('dayOfWeek')} />
+                  <Translate contentKey="plannerBotApp.timetable.dayOfWeek">Day Of Week</Translate>{' '}
+                  <FontAwesomeIcon icon={getSortIconByFieldName('dayOfWeek')} />
                 </th>
                 <th className="hand" onClick={sort('dateOfActivity')}>
-                  Date Of Activity <FontAwesomeIcon icon={getSortIconByFieldName('dateOfActivity')} />
+                  <Translate contentKey="plannerBotApp.timetable.dateOfActivity">Date Of Activity</Translate>{' '}
+                  <FontAwesomeIcon icon={getSortIconByFieldName('dateOfActivity')} />
                 </th>
                 <th className="hand" onClick={sort('startTime')}>
-                  Start Time <FontAwesomeIcon icon={getSortIconByFieldName('startTime')} />
+                  <Translate contentKey="plannerBotApp.timetable.startTime">Start Time</Translate>{' '}
+                  <FontAwesomeIcon icon={getSortIconByFieldName('startTime')} />
                 </th>
                 <th className="hand" onClick={sort('endTime')}>
-                  End Time <FontAwesomeIcon icon={getSortIconByFieldName('endTime')} />
+                  <Translate contentKey="plannerBotApp.timetable.endTime">End Time</Translate>{' '}
+                  <FontAwesomeIcon icon={getSortIconByFieldName('endTime')} />
                 </th>
                 <th className="hand" onClick={sort('activity')}>
-                  Activity <FontAwesomeIcon icon={getSortIconByFieldName('activity')} />
+                  <Translate contentKey="plannerBotApp.timetable.activity">Activity</Translate>{' '}
+                  <FontAwesomeIcon icon={getSortIconByFieldName('activity')} />
                 </th>
                 <th className="hand" onClick={sort('isDone')}>
-                  Is Done <FontAwesomeIcon icon={getSortIconByFieldName('isDone')} />
+                  <Translate contentKey="plannerBotApp.timetable.isDone">Is Done</Translate>{' '}
+                  <FontAwesomeIcon icon={getSortIconByFieldName('isDone')} />
                 </th>
                 <th className="hand" onClick={sort('levelOfImportance')}>
-                  Level Of Importance <FontAwesomeIcon icon={getSortIconByFieldName('levelOfImportance')} />
+                  <Translate contentKey="plannerBotApp.timetable.levelOfImportance">Level Of Importance</Translate>{' '}
+                  <FontAwesomeIcon icon={getSortIconByFieldName('levelOfImportance')} />
                 </th>
                 <th />
               </tr>
@@ -158,11 +168,16 @@ export const Timetable = () => {
                   <td>{timetable.endTime ? <TextFormat type="date" value={timetable.endTime} format={APP_DATE_FORMAT} /> : null}</td>
                   <td>{timetable.activity}</td>
                   <td>{timetable.isDone ? 'true' : 'false'}</td>
-                  <td>{timetable.levelOfImportance}</td>
+                  <td>
+                    <Translate contentKey={`plannerBotApp.Importance.${timetable.levelOfImportance}`} />
+                  </td>
                   <td className="text-end">
                     <div className="btn-group flex-btn-group-container">
                       <Button tag={Link} to={`/timetable/${timetable.id}`} color="info" size="sm" data-cy="entityDetailsButton">
-                        <FontAwesomeIcon icon="eye" /> <span className="d-none d-md-inline">View</span>
+                        <FontAwesomeIcon icon="eye" />{' '}
+                        <span className="d-none d-md-inline">
+                          <Translate contentKey="entity.action.view">View</Translate>
+                        </span>
                       </Button>
                       <Button
                         tag={Link}
@@ -171,7 +186,10 @@ export const Timetable = () => {
                         size="sm"
                         data-cy="entityEditButton"
                       >
-                        <FontAwesomeIcon icon="pencil-alt" /> <span className="d-none d-md-inline">Edit</span>
+                        <FontAwesomeIcon icon="pencil-alt" />{' '}
+                        <span className="d-none d-md-inline">
+                          <Translate contentKey="entity.action.edit">Edit</Translate>
+                        </span>
                       </Button>
                       <Button
                         onClick={() =>
@@ -181,7 +199,10 @@ export const Timetable = () => {
                         size="sm"
                         data-cy="entityDeleteButton"
                       >
-                        <FontAwesomeIcon icon="trash" /> <span className="d-none d-md-inline">Delete</span>
+                        <FontAwesomeIcon icon="trash" />{' '}
+                        <span className="d-none d-md-inline">
+                          <Translate contentKey="entity.action.delete">Delete</Translate>
+                        </span>
                       </Button>
                     </div>
                   </td>
@@ -190,13 +211,17 @@ export const Timetable = () => {
             </tbody>
           </Table>
         ) : (
-          !loading && <div className="alert alert-warning">No Timetables found</div>
+          !loading && (
+            <div className="alert alert-warning">
+              <Translate contentKey="plannerBotApp.timetable.home.notFound">No Timetables found</Translate>
+            </div>
+          )
         )}
       </div>
       {totalItems ? (
         <div className={timetableList && timetableList.length > 0 ? '' : 'd-none'}>
           <div className="justify-content-center d-flex">
-            <JhiItemCount page={paginationState.activePage} total={totalItems} itemsPerPage={paginationState.itemsPerPage} />
+            <JhiItemCount page={paginationState.activePage} total={totalItems} itemsPerPage={paginationState.itemsPerPage} i18nEnabled />
           </div>
           <div className="justify-content-center d-flex">
             <JhiPagination

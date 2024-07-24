@@ -7,7 +7,6 @@ import com.mycompany.myapp.service.TimetableQueryService;
 import com.mycompany.myapp.service.criteria.TimetableCriteria;
 
 import com.mycompany.myapp.service.dto.TimetableDTO;
-import com.mycompany.myapp.service.impl.FreeTimeServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -22,8 +21,7 @@ import java.util.List;
 
 @Service
 public class FreeTimeServiceImplmplementation {
-    @Autowired
-    private FreeTimeServiceImpl freeTimeService;
+
     @Autowired
     private ActivityImpl activity;
 

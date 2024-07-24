@@ -65,7 +65,7 @@ public class AppUserResource {
         }
         appUserDTO = appUserService.save(appUserDTO);
         return ResponseEntity.created(new URI("/api/app-users/" + appUserDTO.getId()))
-            .headers(HeaderUtil.createEntityCreationAlert(applicationName, false, ENTITY_NAME, appUserDTO.getId().toString()))
+            .headers(HeaderUtil.createEntityCreationAlert(applicationName, true, ENTITY_NAME, appUserDTO.getId().toString()))
             .body(appUserDTO);
     }
 
@@ -98,7 +98,7 @@ public class AppUserResource {
 
         appUserDTO = appUserService.update(appUserDTO);
         return ResponseEntity.ok()
-            .headers(HeaderUtil.createEntityUpdateAlert(applicationName, false, ENTITY_NAME, appUserDTO.getId().toString()))
+            .headers(HeaderUtil.createEntityUpdateAlert(applicationName, true, ENTITY_NAME, appUserDTO.getId().toString()))
             .body(appUserDTO);
     }
 
@@ -134,7 +134,7 @@ public class AppUserResource {
 
         return ResponseUtil.wrapOrNotFound(
             result,
-            HeaderUtil.createEntityUpdateAlert(applicationName, false, ENTITY_NAME, appUserDTO.getId().toString())
+            HeaderUtil.createEntityUpdateAlert(applicationName, true, ENTITY_NAME, appUserDTO.getId().toString())
         );
     }
 
@@ -193,7 +193,7 @@ public class AppUserResource {
         log.debug("REST request to delete AppUser : {}", id);
         appUserService.delete(id);
         return ResponseEntity.noContent()
-            .headers(HeaderUtil.createEntityDeletionAlert(applicationName, false, ENTITY_NAME, id.toString()))
+            .headers(HeaderUtil.createEntityDeletionAlert(applicationName, true, ENTITY_NAME, id.toString()))
             .build();
     }
 }

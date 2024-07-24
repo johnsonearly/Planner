@@ -1,0 +1,10 @@
+{
+  "plannerBotApp": {
+    "Importance": {
+      "null": "",
+      "LOW": "LOW",
+      "MEDIUM": "MEDIUM",
+      "HIGH": "HIGH"
+    }
+  }
+}

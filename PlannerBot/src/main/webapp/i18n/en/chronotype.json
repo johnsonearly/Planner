@@ -1,0 +1,9 @@
+{
+  "plannerBotApp": {
+    "Chronotype": {
+      "null": "",
+      "MORNING": "MORNING",
+      "NIGHT": "NIGHT"
+    }
+  }
+}

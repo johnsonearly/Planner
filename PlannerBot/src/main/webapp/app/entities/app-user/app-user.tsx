@@ -92,14 +92,16 @@ export const AppUser = () => {
   return (
     <div>
       <h2 id="app-user-heading" data-cy="AppUserHeading">
-        App Users
+        <Translate contentKey="plannerBotApp.appUser.home.title">App Users</Translate>
         <div className="d-flex justify-content-end">
           <Button className="me-2" color="info" onClick={handleSyncList} disabled={loading}>
-            <FontAwesomeIcon icon="sync" spin={loading} /> Refresh list
+            <FontAwesomeIcon icon="sync" spin={loading} />{' '}
+            <Translate contentKey="plannerBotApp.appUser.home.refreshListLabel">Refresh List</Translate>
           </Button>
           <Link to="/app-user/new" className="btn btn-primary jh-create-entity" id="jh-create-entity" data-cy="entityCreateButton">
             <FontAwesomeIcon icon="plus" />
-            &nbsp; Create a new App User
+            &nbsp;
+            <Translate contentKey="plannerBotApp.appUser.home.createLabel">Create new App User</Translate>
           </Link>
         </div>
       </h2>
@@ -109,31 +111,38 @@ export const AppUser = () => {
             <thead>
               <tr>
                 <th className="hand" onClick={sort('id')}>
-                  ID <FontAwesomeIcon icon={getSortIconByFieldName('id')} />
+                  <Translate contentKey="plannerBotApp.appUser.id">ID</Translate> <FontAwesomeIcon icon={getSortIconByFieldName('id')} />
                 </th>
                 <th className="hand" onClick={sort('name')}>
-                  Name <FontAwesomeIcon icon={getSortIconByFieldName('name')} />
+                  <Translate contentKey="plannerBotApp.appUser.name">Name</Translate>{' '}
+                  <FontAwesomeIcon icon={getSortIconByFieldName('name')} />
                 </th>
                 <th className="hand" onClick={sort('age')}>
-                  Age <FontAwesomeIcon icon={getSortIconByFieldName('age')} />
+                  <Translate contentKey="plannerBotApp.appUser.age">Age</Translate> <FontAwesomeIcon icon={getSortIconByFieldName('age')} />
                 </th>
                 <th className="hand" onClick={sort('appUserId')}>
-                  App User Id <FontAwesomeIcon icon={getSortIconByFieldName('appUserId')} />
+                  <Translate contentKey="plannerBotApp.appUser.appUserId">App User Id</Translate>{' '}
+                  <FontAwesomeIcon icon={getSortIconByFieldName('appUserId')} />
                 </th>
                 <th className="hand" onClick={sort('chronotype')}>
-                  Chronotype <FontAwesomeIcon icon={getSortIconByFieldName('chronotype')} />
+                  <Translate contentKey="plannerBotApp.appUser.chronotype">Chronotype</Translate>{' '}
+                  <FontAwesomeIcon icon={getSortIconByFieldName('chronotype')} />
                 </th>
                 <th className="hand" onClick={sort('readingType')}>
-                  Reading Type <FontAwesomeIcon icon={getSortIconByFieldName('readingType')} />
+                  <Translate contentKey="plannerBotApp.appUser.readingType">Reading Type</Translate>{' '}
+                  <FontAwesomeIcon icon={getSortIconByFieldName('readingType')} />
                 </th>
                 <th className="hand" onClick={sort('attentionSpan')}>
-                  Attention Span <FontAwesomeIcon icon={getSortIconByFieldName('attentionSpan')} />
+                  <Translate contentKey="plannerBotApp.appUser.attentionSpan">Attention Span</Translate>{' '}
+                  <FontAwesomeIcon icon={getSortIconByFieldName('attentionSpan')} />
                 </th>
                 <th className="hand" onClick={sort('gender')}>
-                  Gender <FontAwesomeIcon icon={getSortIconByFieldName('gender')} />
+                  <Translate contentKey="plannerBotApp.appUser.gender">Gender</Translate>{' '}
+                  <FontAwesomeIcon icon={getSortIconByFieldName('gender')} />
                 </th>
                 <th className="hand" onClick={sort('readingStrategy')}>
-                  Reading Strategy <FontAwesomeIcon icon={getSortIconByFieldName('readingStrategy')} />
+                  <Translate contentKey="plannerBotApp.appUser.readingStrategy">Reading Strategy</Translate>{' '}
+                  <FontAwesomeIcon icon={getSortIconByFieldName('readingStrategy')} />
                 </th>
                 <th />
               </tr>
@@ -149,15 +158,28 @@ export const AppUser = () => {
                   <td>{appUser.name}</td>
                   <td>{appUser.age}</td>
                   <td>{appUser.appUserId}</td>
-                  <td>{appUser.chronotype}</td>
-                  <td>{appUser.readingType}</td>
-                  <td>{appUser.attentionSpan}</td>
-                  <td>{appUser.gender}</td>
-                  <td>{appUser.readingStrategy}</td>
+                  <td>
+                    <Translate contentKey={`plannerBotApp.Chronotype.${appUser.chronotype}`} />
+                  </td>
+                  <td>
+                    <Translate contentKey={`plannerBotApp.ReadingType.${appUser.readingType}`} />
+                  </td>
+                  <td>
+                    <Translate contentKey={`plannerBotApp.AttentionSpan.${appUser.attentionSpan}`} />
+                  </td>
+                  <td>
+                    <Translate contentKey={`plannerBotApp.Gender.${appUser.gender}`} />
+                  </td>
+                  <td>
+                    <Translate contentKey={`plannerBotApp.ReadingStrategy.${appUser.readingStrategy}`} />
+                  </td>
                   <td className="text-end">
                     <div className="btn-group flex-btn-group-container">
                       <Button tag={Link} to={`/app-user/${appUser.id}`} color="info" size="sm" data-cy="entityDetailsButton">
-                        <FontAwesomeIcon icon="eye" /> <span className="d-none d-md-inline">View</span>
+                        <FontAwesomeIcon icon="eye" />{' '}
+                        <span className="d-none d-md-inline">
+                          <Translate contentKey="entity.action.view">View</Translate>
+                        </span>
                       </Button>
                       <Button
                         tag={Link}
@@ -166,7 +188,10 @@ export const AppUser = () => {
                         size="sm"
                         data-cy="entityEditButton"
                       >
-                        <FontAwesomeIcon icon="pencil-alt" /> <span className="d-none d-md-inline">Edit</span>
+                        <FontAwesomeIcon icon="pencil-alt" />{' '}
+                        <span className="d-none d-md-inline">
+                          <Translate contentKey="entity.action.edit">Edit</Translate>
+                        </span>
                       </Button>
                       <Button
                         onClick={() =>
@@ -176,7 +201,10 @@ export const AppUser = () => {
                         size="sm"
                         data-cy="entityDeleteButton"
                       >
-                        <FontAwesomeIcon icon="trash" /> <span className="d-none d-md-inline">Delete</span>
+                        <FontAwesomeIcon icon="trash" />{' '}
+                        <span className="d-none d-md-inline">
+                          <Translate contentKey="entity.action.delete">Delete</Translate>
+                        </span>
                       </Button>
                     </div>
                   </td>
@@ -185,13 +213,17 @@ export const AppUser = () => {
             </tbody>
           </Table>
         ) : (
-          !loading && <div className="alert alert-warning">No App Users found</div>
+          !loading && (
+            <div className="alert alert-warning">
+              <Translate contentKey="plannerBotApp.appUser.home.notFound">No App Users found</Translate>
+            </div>
+          )
         )}
       </div>
       {totalItems ? (
         <div className={appUserList && appUserList.length > 0 ? '' : 'd-none'}>
           <div className="justify-content-center d-flex">
-            <JhiItemCount page={paginationState.activePage} total={totalItems} itemsPerPage={paginationState.itemsPerPage} />
+            <JhiItemCount page={paginationState.activePage} total={totalItems} itemsPerPage={paginationState.itemsPerPage} i18nEnabled />
           </div>
           <div className="justify-content-center d-flex">
             <JhiPagination

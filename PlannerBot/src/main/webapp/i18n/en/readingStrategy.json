@@ -1,0 +1,11 @@
+{
+  "plannerBotApp": {
+    "ReadingStrategy": {
+      "null": "",
+      "SPACED_REPETITION": "SPACED_REPETITION",
+      "ACTIVE_RECALL": "ACTIVE_RECALL",
+      "SQ3R_METHOD": "SQ3R_METHOD",
+      "POMODORO_TECHNIQUE": "POMODORO_TECHNIQUE"
+    }
+  }
+}

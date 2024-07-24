@@ -92,14 +92,16 @@ export const Course = () => {
   return (
     <div>
       <h2 id="course-heading" data-cy="CourseHeading">
-        Courses
+        <Translate contentKey="plannerBotApp.course.home.title">Courses</Translate>
         <div className="d-flex justify-content-end">
           <Button className="me-2" color="info" onClick={handleSyncList} disabled={loading}>
-            <FontAwesomeIcon icon="sync" spin={loading} /> Refresh list
+            <FontAwesomeIcon icon="sync" spin={loading} />{' '}
+            <Translate contentKey="plannerBotApp.course.home.refreshListLabel">Refresh List</Translate>
           </Button>
           <Link to="/course/new" className="btn btn-primary jh-create-entity" id="jh-create-entity" data-cy="entityCreateButton">
             <FontAwesomeIcon icon="plus" />
-            &nbsp; Create a new Course
+            &nbsp;
+            <Translate contentKey="plannerBotApp.course.home.createLabel">Create new Course</Translate>
           </Link>
         </div>
       </h2>
@@ -109,16 +111,19 @@ export const Course = () => {
             <thead>
               <tr>
                 <th className="hand" onClick={sort('id')}>
-                  ID <FontAwesomeIcon icon={getSortIconByFieldName('id')} />
+                  <Translate contentKey="plannerBotApp.course.id">ID</Translate> <FontAwesomeIcon icon={getSortIconByFieldName('id')} />
                 </th>
                 <th className="hand" onClick={sort('appUserId')}>
-                  App User Id <FontAwesomeIcon icon={getSortIconByFieldName('appUserId')} />
+                  <Translate contentKey="plannerBotApp.course.appUserId">App User Id</Translate>{' '}
+                  <FontAwesomeIcon icon={getSortIconByFieldName('appUserId')} />
                 </th>
                 <th className="hand" onClick={sort('courseName')}>
-                  Course Name <FontAwesomeIcon icon={getSortIconByFieldName('courseName')} />
+                  <Translate contentKey="plannerBotApp.course.courseName">Course Name</Translate>{' '}
+                  <FontAwesomeIcon icon={getSortIconByFieldName('courseName')} />
                 </th>
                 <th className="hand" onClick={sort('difficulty')}>
-                  Difficulty <FontAwesomeIcon icon={getSortIconByFieldName('difficulty')} />
+                  <Translate contentKey="plannerBotApp.course.difficulty">Difficulty</Translate>{' '}
+                  <FontAwesomeIcon icon={getSortIconByFieldName('difficulty')} />
                 </th>
                 <th />
               </tr>
@@ -133,11 +138,16 @@ export const Course = () => {
                   </td>
                   <td>{course.appUserId}</td>
                   <td>{course.courseName}</td>
-                  <td>{course.difficulty}</td>
+                  <td>
+                    <Translate contentKey={`plannerBotApp.Difficulty.${course.difficulty}`} />
+                  </td>
                   <td className="text-end">
                     <div className="btn-group flex-btn-group-container">
                       <Button tag={Link} to={`/course/${course.id}`} color="info" size="sm" data-cy="entityDetailsButton">
-                        <FontAwesomeIcon icon="eye" /> <span className="d-none d-md-inline">View</span>
+                        <FontAwesomeIcon icon="eye" />{' '}
+                        <span className="d-none d-md-inline">
+                          <Translate contentKey="entity.action.view">View</Translate>
+                        </span>
                       </Button>
                       <Button
                         tag={Link}
@@ -146,7 +156,10 @@ export const Course = () => {
                         size="sm"
                         data-cy="entityEditButton"
                       >
-                        <FontAwesomeIcon icon="pencil-alt" /> <span className="d-none d-md-inline">Edit</span>
+                        <FontAwesomeIcon icon="pencil-alt" />{' '}
+                        <span className="d-none d-md-inline">
+                          <Translate contentKey="entity.action.edit">Edit</Translate>
+                        </span>
                       </Button>
                       <Button
                         onClick={() =>
@@ -156,7 +169,10 @@ export const Course = () => {
                         size="sm"
                         data-cy="entityDeleteButton"
                       >
-                        <FontAwesomeIcon icon="trash" /> <span className="d-none d-md-inline">Delete</span>
+                        <FontAwesomeIcon icon="trash" />{' '}
+                        <span className="d-none d-md-inline">
+                          <Translate contentKey="entity.action.delete">Delete</Translate>
+                        </span>
                       </Button>
                     </div>
                   </td>
@@ -165,13 +181,17 @@ export const Course = () => {
             </tbody>
           </Table>
         ) : (
-          !loading && <div className="alert alert-warning">No Courses found</div>
+          !loading && (
+            <div className="alert alert-warning">
+              <Translate contentKey="plannerBotApp.course.home.notFound">No Courses found</Translate>
+            </div>
+          )
         )}
       </div>
       {totalItems ? (
         <div className={courseList && courseList.length > 0 ? '' : 'd-none'}>
           <div className="justify-content-center d-flex">
-            <JhiItemCount page={paginationState.activePage} total={totalItems} itemsPerPage={paginationState.itemsPerPage} />
+            <JhiItemCount page={paginationState.activePage} total={totalItems} itemsPerPage={paginationState.itemsPerPage} i18nEnabled />
           </div>
           <div className="justify-content-center d-flex">
             <JhiPagination

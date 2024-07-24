@@ -1,0 +1,10 @@
+{
+  "plannerBotApp": {
+    "AttentionSpan": {
+      "null": "",
+      "SHORT": "SHORT",
+      "MEDIUM": "MEDIUM",
+      "LONG": "LONG"
+    }
+  }
+}

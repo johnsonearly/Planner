@@ -1,11 +1,11 @@
 id;app_user_id;day_of_week;date_of_activity;start_time;end_time;activity;is_done;level_of_importance
-1;32466;near;2024-07-13;2024-07-13T07:54:00;2024-07-12T16:54:49;really since;false;MEDIUM
-2;15065;oddly;2024-07-13;2024-07-13T02:58:39;2024-07-12T14:27:35;pipeline besides;true;HIGH
-3;934;funk;2024-07-13;2024-07-12T20:38:16;2024-07-13T09:56:04;string;true;MEDIUM
-4;9806;mortified monthly;2024-07-13;2024-07-13T00:22:11;2024-07-13T09:27:31;tenderize inferior rowdy;false;MEDIUM
-5;22631;variable throbbing;2024-07-12;2024-07-12T11:36:42;2024-07-13T08:07:36;till gee free;true;HIGH
-6;2783;surprisingly alongside;2024-07-12;2024-07-13T05:13:58;2024-07-13T01:36:54;campaign concerning;false;LOW
-7;5134;lone;2024-07-13;2024-07-13T04:01:19;2024-07-13T01:28:30;joyously;false;LOW
-8;13824;whoever after since;2024-07-12;2024-07-13T09:05:50;2024-07-13T04:10:04;not overlap;true;LOW
-9;881;sympathetically;2024-07-12;2024-07-12T13:04:23;2024-07-12T10:33:32;excepting since;false;MEDIUM
-10;13404;birthday punctually;2024-07-12;2024-07-13T05:52:21;2024-07-12T21:37:53;behind;true;HIGH
+1;32466;near;2024-07-24;2024-07-24T16:51:58;2024-07-24T01:52:47;really since;false;MEDIUM
+2;15065;oddly;2024-07-24;2024-07-24T11:56:37;2024-07-23T23:25:33;pipeline besides;true;HIGH
+3;934;funk;2024-07-24;2024-07-24T05:36:14;2024-07-24T18:54:02;string;true;MEDIUM
+4;9806;mortified monthly;2024-07-24;2024-07-24T09:20:09;2024-07-24T18:25:29;tenderize inferior rowdy;false;MEDIUM
+5;22631;variable throbbing;2024-07-23;2024-07-23T20:34:40;2024-07-24T17:05:34;till gee free;true;HIGH
+6;2783;surprisingly alongside;2024-07-24;2024-07-24T14:11:56;2024-07-24T10:34:52;campaign concerning;false;LOW
+7;5134;lone;2024-07-24;2024-07-24T12:59:17;2024-07-24T10:26:28;joyously;false;LOW
+8;13824;whoever after since;2024-07-24;2024-07-24T18:03:48;2024-07-24T13:08:02;not overlap;true;LOW
+9;881;sympathetically;2024-07-23;2024-07-23T22:02:21;2024-07-23T19:31:30;excepting since;false;MEDIUM
+10;13404;birthday punctually;2024-07-23;2024-07-24T14:50:19;2024-07-24T06:35:51;behind;true;HIGH

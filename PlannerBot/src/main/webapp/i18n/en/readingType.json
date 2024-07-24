@@ -1,0 +1,9 @@
+{
+  "plannerBotApp": {
+    "ReadingType": {
+      "null": "",
+      "INTENSIVE": "INTENSIVE",
+      "EXTENSIVE": "EXTENSIVE"
+    }
+  }
+}

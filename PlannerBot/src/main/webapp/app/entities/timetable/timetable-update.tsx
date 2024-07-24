@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useNavigate, useParams } from 'react-router-dom';
 import { Button, Row, Col, FormText } from 'reactstrap';
-import { isNumber, ValidatedField, ValidatedForm } from 'react-jhipster';
+import { isNumber, Translate, translate, ValidatedField, ValidatedForm } from 'react-jhipster';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 import { convertDateTimeFromServer, convertDateTimeToServer, displayDefaultDateTime } from 'app/shared/util/date-utils';
@@ -85,7 +85,7 @@ export const TimetableUpdate = () => {
       <Row className="justify-content-center">
         <Col md="8">
           <h2 id="plannerBotApp.timetable.home.createOrEditLabel" data-cy="TimetableCreateUpdateHeading">
-            Create or edit a Timetable
+            <Translate contentKey="plannerBotApp.timetable.home.createOrEditLabel">Create or edit a Timetable</Translate>
           </h2>
         </Col>
       </Row>
@@ -95,18 +95,39 @@ export const TimetableUpdate = () => {
             <p>Loading...</p>
           ) : (
             <ValidatedForm defaultValues={defaultValues()} onSubmit={saveEntity}>
-              {!isNew ? <ValidatedField name="id" required readOnly id="timetable-id" label="ID" validate={{ required: true }} /> : null}
-              <ValidatedField label="App User Id" id="timetable-appUserId" name="appUserId" data-cy="appUserId" type="text" />
-              <ValidatedField label="Day Of Week" id="timetable-dayOfWeek" name="dayOfWeek" data-cy="dayOfWeek" type="text" />
+              {!isNew ? (
+                <ValidatedField
+                  name="id"
+                  required
+                  readOnly
+                  id="timetable-id"
+                  label={translate('global.field.id')}
+                  validate={{ required: true }}
+                />
+              ) : null}
               <ValidatedField
-                label="Date Of Activity"
+                label={translate('plannerBotApp.timetable.appUserId')}
+                id="timetable-appUserId"
+                name="appUserId"
+                data-cy="appUserId"
+                type="text"
+              />
+              <ValidatedField
+                label={translate('plannerBotApp.timetable.dayOfWeek')}
+                id="timetable-dayOfWeek"
+                name="dayOfWeek"
+                data-cy="dayOfWeek"
+                type="text"
+              />
+              <ValidatedField
+                label={translate('plannerBotApp.timetable.dateOfActivity')}
                 id="timetable-dateOfActivity"
                 name="dateOfActivity"
                 data-cy="dateOfActivity"
                 type="date"
               />
               <ValidatedField
-                label="Start Time"
+                label={translate('plannerBotApp.timetable.startTime')}
                 id="timetable-startTime"
                 name="startTime"
                 data-cy="startTime"
@@ -114,17 +135,30 @@ export const TimetableUpdate = () => {
                 placeholder="YYYY-MM-DD HH:mm"
               />
               <ValidatedField
-                label="End Time"
+                label={translate('plannerBotApp.timetable.endTime')}
                 id="timetable-endTime"
                 name="endTime"
                 data-cy="endTime"
                 type="datetime-local"
                 placeholder="YYYY-MM-DD HH:mm"
               />
-              <ValidatedField label="Activity" id="timetable-activity" name="activity" data-cy="activity" type="text" />
-              <ValidatedField label="Is Done" id="timetable-isDone" name="isDone" data-cy="isDone" check type="checkbox" />
               <ValidatedField
-                label="Level Of Importance"
+                label={translate('plannerBotApp.timetable.activity')}
+                id="timetable-activity"
+                name="activity"
+                data-cy="activity"
+                type="text"
+              />
+              <ValidatedField
+                label={translate('plannerBotApp.timetable.isDone')}
+                id="timetable-isDone"
+                name="isDone"
+                data-cy="isDone"
+                check
+                type="checkbox"
+              />
+              <ValidatedField
+                label={translate('plannerBotApp.timetable.levelOfImportance')}
                 id="timetable-levelOfImportance"
                 name="levelOfImportance"
                 data-cy="levelOfImportance"
@@ -132,19 +166,22 @@ export const TimetableUpdate = () => {
               >
                 {importanceValues.map(importance => (
                   <option value={importance} key={importance}>
-                    {importance}
+                    {translate('plannerBotApp.Importance.' + importance)}
                   </option>
                 ))}
               </ValidatedField>
               <Button tag={Link} id="cancel-save" data-cy="entityCreateCancelButton" to="/timetable" replace color="info">
                 <FontAwesomeIcon icon="arrow-left" />
                 &nbsp;
-                <span className="d-none d-md-inline">Back</span>
+                <span className="d-none d-md-inline">
+                  <Translate contentKey="entity.action.back">Back</Translate>
+                </span>
               </Button>
               &nbsp;
               <Button color="primary" id="save-entity" data-cy="entityCreateSaveButton" type="submit" disabled={updating}>
                 <FontAwesomeIcon icon="save" />
-                &nbsp; Save
+                &nbsp;
+                <Translate contentKey="entity.action.save">Save</Translate>
               </Button>
             </ValidatedForm>
           )}

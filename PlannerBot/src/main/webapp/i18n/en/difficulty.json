@@ -1,0 +1,10 @@
+{
+  "plannerBotApp": {
+    "Difficulty": {
+      "null": "",
+      "LOW": "LOW",
+      "MEDIUM": "MEDIUM",
+      "HIGH": "HIGH"
+    }
+  }
+}

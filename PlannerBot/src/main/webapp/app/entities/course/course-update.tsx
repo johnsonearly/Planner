@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useNavigate, useParams } from 'react-router-dom';
 import { Button, Row, Col, FormText } from 'reactstrap';
-import { isNumber, ValidatedField, ValidatedForm } from 'react-jhipster';
+import { isNumber, Translate, translate, ValidatedField, ValidatedForm } from 'react-jhipster';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 import { convertDateTimeFromServer, convertDateTimeToServer, displayDefaultDateTime } from 'app/shared/util/date-utils';
@@ -78,7 +78,7 @@ export const CourseUpdate = () => {
       <Row className="justify-content-center">
         <Col md="8">
           <h2 id="plannerBotApp.course.home.createOrEditLabel" data-cy="CourseCreateUpdateHeading">
-            Create or edit a Course
+            <Translate contentKey="plannerBotApp.course.home.createOrEditLabel">Create or edit a Course</Translate>
           </h2>
         </Col>
       </Row>
@@ -88,25 +88,55 @@ export const CourseUpdate = () => {
             <p>Loading...</p>
           ) : (
             <ValidatedForm defaultValues={defaultValues()} onSubmit={saveEntity}>
-              {!isNew ? <ValidatedField name="id" required readOnly id="course-id" label="ID" validate={{ required: true }} /> : null}
-              <ValidatedField label="App User Id" id="course-appUserId" name="appUserId" data-cy="appUserId" type="text" />
-              <ValidatedField label="Course Name" id="course-courseName" name="courseName" data-cy="courseName" type="text" />
-              <ValidatedField label="Difficulty" id="course-difficulty" name="difficulty" data-cy="difficulty" type="select">
+              {!isNew ? (
+                <ValidatedField
+                  name="id"
+                  required
+                  readOnly
+                  id="course-id"
+                  label={translate('global.field.id')}
+                  validate={{ required: true }}
+                />
+              ) : null}
+              <ValidatedField
+                label={translate('plannerBotApp.course.appUserId')}
+                id="course-appUserId"
+                name="appUserId"
+                data-cy="appUserId"
+                type="text"
+              />
+              <ValidatedField
+                label={translate('plannerBotApp.course.courseName')}
+                id="course-courseName"
+                name="courseName"
+                data-cy="courseName"
+                type="text"
+              />
+              <ValidatedField
+                label={translate('plannerBotApp.course.difficulty')}
+                id="course-difficulty"
+                name="difficulty"
+                data-cy="difficulty"
+                type="select"
+              >
                 {difficultyValues.map(difficulty => (
                   <option value={difficulty} key={difficulty}>
-                    {difficulty}
+                    {translate('plannerBotApp.Difficulty.' + difficulty)}
                   </option>
                 ))}
               </ValidatedField>
               <Button tag={Link} id="cancel-save" data-cy="entityCreateCancelButton" to="/course" replace color="info">
                 <FontAwesomeIcon icon="arrow-left" />
                 &nbsp;
-                <span className="d-none d-md-inline">Back</span>
+                <span className="d-none d-md-inline">
+                  <Translate contentKey="entity.action.back">Back</Translate>
+                </span>
               </Button>
               &nbsp;
               <Button color="primary" id="save-entity" data-cy="entityCreateSaveButton" type="submit" disabled={updating}>
                 <FontAwesomeIcon icon="save" />
-                &nbsp; Save
+                &nbsp;
+                <Translate contentKey="entity.action.save">Save</Translate>
               </Button>
             </ValidatedForm>
           )}

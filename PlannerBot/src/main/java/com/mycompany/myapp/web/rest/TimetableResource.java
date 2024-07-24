@@ -69,7 +69,7 @@ public class TimetableResource {
         }
         timetableDTO = timetableService.save(timetableDTO);
         return ResponseEntity.created(new URI("/api/timetables/" + timetableDTO.getId()))
-            .headers(HeaderUtil.createEntityCreationAlert(applicationName, false, ENTITY_NAME, timetableDTO.getId().toString()))
+            .headers(HeaderUtil.createEntityCreationAlert(applicationName, true, ENTITY_NAME, timetableDTO.getId().toString()))
             .body(timetableDTO);
     }
 
@@ -102,7 +102,7 @@ public class TimetableResource {
 
         timetableDTO = timetableService.update(timetableDTO);
         return ResponseEntity.ok()
-            .headers(HeaderUtil.createEntityUpdateAlert(applicationName, false, ENTITY_NAME, timetableDTO.getId().toString()))
+            .headers(HeaderUtil.createEntityUpdateAlert(applicationName, true, ENTITY_NAME, timetableDTO.getId().toString()))
             .body(timetableDTO);
     }
 
@@ -138,7 +138,7 @@ public class TimetableResource {
 
         return ResponseUtil.wrapOrNotFound(
             result,
-            HeaderUtil.createEntityUpdateAlert(applicationName, false, ENTITY_NAME, timetableDTO.getId().toString())
+            HeaderUtil.createEntityUpdateAlert(applicationName, true, ENTITY_NAME, timetableDTO.getId().toString())
         );
     }
 
@@ -197,7 +197,7 @@ public class TimetableResource {
         log.debug("REST request to delete Timetable : {}", id);
         timetableService.delete(id);
         return ResponseEntity.noContent()
-            .headers(HeaderUtil.createEntityDeletionAlert(applicationName, false, ENTITY_NAME, id.toString()))
+            .headers(HeaderUtil.createEntityDeletionAlert(applicationName, true, ENTITY_NAME, id.toString()))
             .build();
     }
 }
